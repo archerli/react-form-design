@@ -13,8 +13,12 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import CollapseItem from './module/CollapseItem'
 import FormComponentPanel from './module/FormComponentPanel'
 import OperatingArea from './module/OperatingArea'
+import FormProperties from './module/FormProperties'
+import hyperid from 'hyperid'
 
 const { Panel } = Collapse;
+
+const instance = hyperid(true)
 
 const FormDesign = forwardRef((props, ref) => {
   const { fields, toolbars } = props
@@ -25,7 +29,7 @@ const FormDesign = forwardRef((props, ref) => {
 
   const [basics, setBasics] = useState([])
   const [layout, setLayout] = useState([])
-  const [formConfig, useFormConfig] = useState({
+  const [formConfig, setFormConfig] = useState({
     list: [],
     config: {
       layout: "horizontal",
@@ -34,6 +38,10 @@ const FormDesign = forwardRef((props, ref) => {
       hideRequiredMark: false,
       customStyle: ""
     }
+  })
+
+  const [previewOptions, setPreviewOptions] = useState({
+    width: 850
   })
 
   useEffect(() => {
@@ -45,6 +53,18 @@ const FormDesign = forwardRef((props, ref) => {
     // 计算需要显示的布局字段
     setLayout(layoutList.filter(item => fields.includes(item.type)))
   }, [layoutList])
+
+  const onItemDrop = (data) => {
+    let item = { ...data }
+    let nextConfig = { ...formConfig }
+
+    delete item.icon
+    delete item.component
+
+    item.key = item.model = instance()
+    nextConfig.list.push(item)
+    setFormConfig(nextConfig)
+  }
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -71,10 +91,19 @@ const FormDesign = forwardRef((props, ref) => {
           </aside>
           <section className="main">
             <OperatingArea />
-            <FormComponentPanel data={formConfig} />
+            <FormComponentPanel
+              data={formConfig}
+              onDrop={onItemDrop}
+            />
           </section>
-          <aside className="right">
 
+          <aside className="right">
+            <FormProperties
+              config={formConfig.config}
+              setFormConfig={setFormConfig}
+              previewOptions={previewOptions}
+              setPreviewOptions={setPreviewOptions}
+            />
           </aside>
         </div>
       </div>

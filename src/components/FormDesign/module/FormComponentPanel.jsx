@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { Form } from 'antd'
 
 function FormComponentPanel(props) {
-    const { data } = props
+    const { data, onDrop } = props
     const [form] = Form.useForm()
+
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: 'components',
         drop: (item, monitor) => {
-            console.log(monitor.getItem())
+            onDrop && onDrop(monitor.getItem().data)
             return { name: 'Dustbin' }
         },
         collect: (monitor) => ({
@@ -16,6 +17,10 @@ function FormComponentPanel(props) {
             canDrop: monitor.canDrop(),
         }),
     }));
+
+    useEffect(() => {
+        console.log('list:', data.list)
+    }, [data])
 
     return (
         <div className={`form-panel no-toolbars-top`}>
@@ -31,7 +36,7 @@ function FormComponentPanel(props) {
             >
                 <div ref={drop} className="draggable-box">
                     <div className="list-main">
-                        
+
                     </div>
                 </div>
             </Form>

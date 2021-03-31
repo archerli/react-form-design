@@ -12,7 +12,7 @@
 
 @left-right-width : 270px;
 @header-height : 56px;
-@operating-area-height : 45px;
+@operating-area-height : 37px;
 @import "./k-table.less";
 @import "./k-editor.less";
 
@@ -38,7 +38,10 @@
 
   // 头部操作按钮区域
   .operating-area {
-    border-bottom: 2px solid @border-color;
+    // border-bottom: 2px solid @border-color;
+    position: relative;
+    z-index: 10;
+    border-bottom: 1px solid @border-color;
     font-size: 16px;
     text-align: left;
     height: @operating-area-height;
@@ -47,10 +50,11 @@
     display: flex;
     justify-content: space-between;
     align-content: center;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 20%);
 
     a {
       color: #666;
-      margin-left: 10px;
+      margin: 0 8px;
 
       &:hover {
         color: @primary-color;
@@ -121,6 +125,7 @@
 
             >.ant-collapse-header {
               padding: 7px 0 7px 40px;
+
               .ant-collapse-arrow {
                 top: 50%;
                 transform: translate(0, -50%);
@@ -228,8 +233,8 @@
           background: #fff;
 
           .head-title {
-            height: 48px;
-            line-height: 48px;
+            height: @operating-area-height;
+            line-height: @operating-area-height;
             padding: 0 24px;
             font-size: 16px;
             border-bottom: 1px solid @border-color;
@@ -238,7 +243,7 @@
 
           .properties-body {
             overflow: auto;
-            height: calc(100% - 48px);
+            height: calc(100% - @operating-area-height);
             padding: 8px 16px;
           }
 
@@ -251,6 +256,14 @@
             .ant-form-item-label {
               line-height: 2;
             }
+          }
+
+          .ant-form-item-control {
+            line-height: 30px;
+          }
+
+          .ant-form-item-control-input-content {
+            padding-bottom: 4px;
           }
         }
 
@@ -295,6 +308,7 @@
           font-size: 20px;
           color: #aaa;
           z-index: 16;
+          pointer-events: none;
         }
 
         .a-form-box {
@@ -747,7 +761,7 @@
   // 防止报错信息占位
   .ant-form-item-control {
     position: relative;
-
+    
     .ant-form-explain {
       bottom: -16px;
       position: absolute;
@@ -814,3 +828,21 @@
 //     text-decoration: none;
 //   }
 // }
+
+.change-col-box {
+  >div {
+    padding: 5px;
+    display: flex;
+    align-self: center;
+    >label {
+      text-align: right;
+      padding-right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 16px;
+      
+      width: 45px;
+    }
+  }
+}

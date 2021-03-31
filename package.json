@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.13.0",
     "craco-less": "^1.17.1",
+    "hyperid": "^2.1.0",
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-dnd": "^13.1.1",
