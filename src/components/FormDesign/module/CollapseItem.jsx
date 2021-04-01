@@ -19,7 +19,7 @@ const Item = (props) => {
         item: { name: 'components_' + index, type: 'components', data },
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult();
-            if (item && dropResult) {
+            if (dropResult) {
                 // alert(`You dropped ${item.name} into ${dropResult.name}!`);
             }
         },

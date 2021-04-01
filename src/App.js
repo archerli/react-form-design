@@ -1,5 +1,7 @@
 // import logo from './logo.svg';
 import './App.less';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import FormDesign from './components/FormDesign'
 import "./styles/form-design.less";
 
@@ -22,7 +24,10 @@ function App() {
     //     </a>
     //   </header>
     // </div>
-    <FormDesign />
+    <DndProvider backend={HTML5Backend}>
+      <FormDesign />
+    </DndProvider>
+
   );
 }
 

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
-import { useDrop } from 'react-dnd';
+import React, { useEffect } from 'react'
+import { useDrop } from 'react-dnd'
 import { Form } from 'antd'
+import LayoutItem from './LayoutItem'
 
 function FormComponentPanel(props) {
     const { data, onDrop } = props
@@ -8,18 +9,26 @@ function FormComponentPanel(props) {
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: 'components',
+        // hover: (item, monitor) => {
+        // },
         drop: (item, monitor) => {
+            let data = monitor.getItem().data
             onDrop && onDrop(monitor.getItem().data)
-            return { name: 'Dustbin' }
+            return data
         },
         collect: (monitor) => ({
-            isOver: monitor.isOver(),
+            isOver: monitor.isOver({ shallow: true }),
             canDrop: monitor.canDrop(),
         }),
-    }));
+    }), [data]);
 
     useEffect(() => {
-        console.log('list:', data.list)
+        props.onDropOver && props.onDropOver(isOver)
+        // console.log('isOver: ', isOver)
+    }, [isOver])
+
+    useEffect(() => {
+        // console.log('list:', data.list)
     }, [data])
 
     return (
@@ -36,7 +45,14 @@ function FormComponentPanel(props) {
             >
                 <div ref={drop} className="draggable-box">
                     <div className="list-main">
-
+                        {
+                            data.list.map((d, i) => <LayoutItem
+                                key={`layout_item_${i}`}
+                                index={i}
+                                data={d}
+                                onItemSort={props.onItemSort}
+                            />)
+                        }
                     </div>
                 </div>
             </Form>

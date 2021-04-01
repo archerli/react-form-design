@@ -1,14 +1,13 @@
-import React, { forwardRef, useImperativeHandle, useEffect, useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useEffect, useState, useCallback } from 'react';
 import { Collapse } from 'antd';
-import { useDrop } from 'react-dnd';
+import { useDragDropManager } from 'react-dnd';
 import {
   basicsList,
   // highList,
   layoutList,
   customComponents
 } from '../../config/formItemsConfig';
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+
 
 import CollapseItem from './module/CollapseItem'
 import FormComponentPanel from './module/FormComponentPanel'
@@ -44,6 +43,8 @@ const FormDesign = forwardRef((props, ref) => {
     width: 850
   })
 
+  const dragDropManager = useDragDropManager()
+
   useEffect(() => {
     // 计算需要显示的基础字段
     setBasics(basicsList.filter(item => fields.includes(item.type)))
@@ -54,60 +55,82 @@ const FormDesign = forwardRef((props, ref) => {
     setLayout(layoutList.filter(item => fields.includes(item.type)))
   }, [layoutList])
 
-  const onItemDrop = (data) => {
-    let item = { ...data }
+  const onDropOver = (isOver) => {
     let nextConfig = { ...formConfig }
-
-    delete item.icon
-    delete item.component
-
-    item.key = item.model = instance()
-    nextConfig.list.push(item)
+    if (isOver) {
+      let item = dragDropManager.monitor.getItem()
+      if (item && item.data) {
+        nextConfig.list.push({ ...item.data, state: 'temp' })
+      }
+    } else {
+      nextConfig.list = nextConfig.list.filter(d => d.state !== 'temp')
+    }
     setFormConfig(nextConfig)
   }
 
+  const onItemDrop = useCallback((data) => {
+    let item = { ...data }
+    let nextConfig = { ...formConfig }
+    delete item.icon
+    delete item.component
+    if (item.state) delete item.state
+    item.index = nextConfig.list.length
+    item.key = item.model = instance()
+    nextConfig.list.push(item)
+    // console.log(item)
+    setFormConfig(nextConfig)
+  }, [formConfig])
+
+  const onItemSort = useCallback((sourceIndex, targetIndex) => {
+    let list = [...formConfig.list]
+    let sourceItem = list[sourceIndex]
+    list[sourceIndex] = list[targetIndex]
+    list[targetIndex] = sourceItem
+    formConfig.list = list
+    setFormConfig({ ...formConfig })
+  }, [formConfig])
+
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="form-designer-container-9136076486841527">
+    <div className="form-designer-container-9136076486841527">
+      <div className="content">
+        <aside className="left">
+          <Collapse
+            defaultActiveKey={['1']}
+          >
+            {!basics.length ? null : <Panel header="基础控件" key="1">
+              <CollapseItem
+                list={basics}
+              />
+            </Panel>}
 
-        <div className="content">
-          <aside className="left">
-            <Collapse
-              defaultActiveKey={['1']}
-            >
-              {!basics.length ? null : <Panel header="基础控件" key="1">
-                <CollapseItem
-                  list={basics}
-                />
-              </Panel>}
+            {!layout.length ? null : <Panel header="布局控件" key="4">
+              <CollapseItem
+                list={layout}
+              />
+            </Panel>}
+          </Collapse>
 
-              {!layout.length ? null : <Panel header="布局控件" key="4">
-                <CollapseItem
-                  list={layout}
-                />
-              </Panel>}
-            </Collapse>
+        </aside>
+        <section className="main">
+          <OperatingArea />
+          <FormComponentPanel
+            data={formConfig}
+            onDrop={onItemDrop}
+            onDropOver={onDropOver}
+            onItemSort={onItemSort}
+          />
+        </section>
 
-          </aside>
-          <section className="main">
-            <OperatingArea />
-            <FormComponentPanel
-              data={formConfig}
-              onDrop={onItemDrop}
-            />
-          </section>
-
-          <aside className="right">
-            <FormProperties
-              config={formConfig.config}
-              setFormConfig={setFormConfig}
-              previewOptions={previewOptions}
-              setPreviewOptions={setPreviewOptions}
-            />
-          </aside>
-        </div>
+        <aside className="right">
+          <FormProperties
+            config={formConfig.config}
+            setFormConfig={setFormConfig}
+            previewOptions={previewOptions}
+            setPreviewOptions={setPreviewOptions}
+          />
+        </aside>
       </div>
-    </DndProvider>
+    </div>
   );
 })
 
