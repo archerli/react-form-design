@@ -31,3 +31,8 @@ export const SwitchItem = memo((props) => {
     <Switch>{data.label}</Switch>
   </Form.Item>
 })
+
+export const HTMLItem = memo((props) => {
+  const { data } = props
+  return <div dangerouslySetInnerHTML={{ __html: data.options.defaultValue }}></div>
+})

@@ -8,7 +8,6 @@ import {
   customComponents
 } from '../../config/formItemsConfig';
 
-
 import CollapseItem from './module/CollapseItem'
 import FormComponentPanel from './module/FormComponentPanel'
 import OperatingArea from './module/OperatingArea'
@@ -90,45 +89,53 @@ const FormDesign = forwardRef((props, ref) => {
     setFormConfig({ ...formConfig })
   }, [formConfig])
 
+  // const reorder = (list, startIndex, endIndex) => {
+  //   const result = Array.from(list);
+  //   const [removed] = result.splice(startIndex, 1);
+  //   result.splice(endIndex, 0, removed);
+
+  //   return result;
+  // };
+
   return (
     <div className="form-designer-container-9136076486841527">
       <div className="content">
-        <aside className="left">
-          <Collapse
-            defaultActiveKey={['1']}
-          >
-            {!basics.length ? null : <Panel header="基础控件" key="1">
-              <CollapseItem
-                list={basics}
-              />
-            </Panel>}
+          <aside className="left">
+            <Collapse
+              defaultActiveKey={['1']}
+            >
+              {!basics.length ? null : <Panel header="基础控件" key="1">
+                <CollapseItem
+                  list={basics}
+                />
+              </Panel>}
 
-            {!layout.length ? null : <Panel header="布局控件" key="4">
-              <CollapseItem
-                list={layout}
-              />
-            </Panel>}
-          </Collapse>
+              {!layout.length ? null : <Panel header="布局控件" key="4">
+                <CollapseItem
+                  list={layout}
+                />
+              </Panel>}
+            </Collapse>
 
-        </aside>
-        <section className="main">
-          <OperatingArea />
-          <FormComponentPanel
-            data={formConfig}
-            onDrop={onItemDrop}
-            onDropOver={onDropOver}
-            onItemSort={onItemSort}
-          />
-        </section>
+          </aside>
+          <section className="main">
+            <OperatingArea />
+            <FormComponentPanel
+              data={formConfig}
+              onDrop={onItemDrop}
+              onDropOver={onDropOver}
+              onItemSort={onItemSort}
+            />
+          </section>
 
-        <aside className="right">
-          <FormProperties
-            config={formConfig.config}
-            setFormConfig={setFormConfig}
-            previewOptions={previewOptions}
-            setPreviewOptions={setPreviewOptions}
-          />
-        </aside>
+          <aside className="right">
+            <FormProperties
+              config={formConfig.config}
+              setFormConfig={setFormConfig}
+              previewOptions={previewOptions}
+              setPreviewOptions={setPreviewOptions}
+            />
+          </aside>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 # Getting Started
 
-React 版本的 k-form-desgin [k-form-design](https://github.com/Kchengz/k-form-design).
+React 版本 [k-form-design](https://github.com/Kchengz/k-form-design).
 
 ## Available Scripts
 
