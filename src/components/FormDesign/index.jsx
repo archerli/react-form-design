@@ -1,6 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useEffect, useState, useCallback } from 'react';
 import { Collapse } from 'antd';
-import { useDragDropManager } from 'react-dnd';
 import {
   basicsList,
   // highList,
@@ -42,8 +41,6 @@ const FormDesign = forwardRef((props, ref) => {
     width: 850
   })
 
-  const dragDropManager = useDragDropManager()
-
   useEffect(() => {
     // 计算需要显示的基础字段
     setBasics(basicsList.filter(item => fields.includes(item.type)))
@@ -55,16 +52,16 @@ const FormDesign = forwardRef((props, ref) => {
   }, [layoutList])
 
   const onDropOver = (isOver) => {
-    let nextConfig = { ...formConfig }
-    if (isOver) {
-      let item = dragDropManager.monitor.getItem()
-      if (item && item.data) {
-        nextConfig.list.push({ ...item.data, state: 'temp' })
-      }
-    } else {
-      nextConfig.list = nextConfig.list.filter(d => d.state !== 'temp')
-    }
-    setFormConfig(nextConfig)
+    // let nextConfig = { ...formConfig }
+    // if (isOver) {
+    //   let item = dragDropManager.monitor.getItem()
+    //   if (item && item.data) {
+    //     nextConfig.list.push({ ...item.data, state: 'temp' })
+    //   }
+    // } else {
+    //   nextConfig.list = nextConfig.list.filter(d => d.state !== 'temp')
+    // }
+    // setFormConfig(nextConfig)
   }
 
   const onItemDrop = useCallback((data) => {
