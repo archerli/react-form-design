@@ -1,15 +1,23 @@
 import React, { useEffect } from 'react'
 import { Form } from 'antd'
+import { ReactSortable } from "react-sortablejs";
 import LayoutItem from './LayoutItem'
 
+
 function FormComponentPanel(props) {
-    const { data, onDrop } = props
+    const { data, setList, selectItem, handleSetSelectItem } = props
     const [form] = Form.useForm()
 
     useEffect(() => {
         // console.log('list:', data.list)
     }, [data])
 
+    const onDragStart = (evt) => {
+        let record = data.list[evt.oldIndex]
+        if (record) {
+            handleSetSelectItem && handleSetSelectItem(record)
+        }
+    }
 
     return (
         <div className={`form-panel no-toolbars-top`}>
@@ -24,13 +32,27 @@ function FormComponentPanel(props) {
                 style={data.config.customStyle || {}}
             >
                 <div className="draggable-box">
-                    {data.list.map((item, index) => <LayoutItem
-                        key={`layout_${index}`}
-                        index={index}
-                        data={item}
-                    // onItemSort={props.onItemSort}
-                    />)}
+                    <ReactSortable
+                        tag="div"
+                        className="list-main"
+                        list={data.list}
+                        setList={setList}
+                        group={{ name: 'form-draggable' }}
+                        animation={180}
+                        ghostClass={'moving'}
+                        handle={'.drag-move'}
+                        onStart={onDragStart}
+                    >
+                        {data.list.map((item, index) => <LayoutItem
+                            key={`layout_${index}`}
+                            index={index}
+                            data={item}
+                            selectItem={selectItem}
+                            handleSetSelectItem={handleSetSelectItem}
+                        />)}
+                    </ReactSortable>
                 </div>
+
             </Form>
         </div>
     )

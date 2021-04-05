@@ -1,8 +1,9 @@
 import React, { memo, useEffect } from 'react';
 import { TempItem, TextItem, ButtonItem, SwitchItem, HTMLItem } from '../../LayoutFormItem'
+import DragMoveItem from './DragMoveItem'
 
 function LayoutItem(props) {
-    const { index, data = {} } = props
+    const { index, selectItem, handleSetSelectItem, data = {} } = props
 
     let RenderItem = () => <></>
 
@@ -26,8 +27,14 @@ function LayoutItem(props) {
     }
 
     return (
-        <div  >
-            <RenderItem {...props} />
+        <div className="drag-move" >
+            <DragMoveItem
+                record={data}
+                selectItem={selectItem}
+                handleSetSelectItem={handleSetSelectItem}
+            >
+                <RenderItem {...props} />
+            </DragMoveItem>
         </div>
     );
 }
