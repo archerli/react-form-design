@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { TempItem, TextItem, ButtonItem, SwitchItem, HTMLItem } from '../../LayoutFormItem'
+import { TempItem, InputItem, TextItem, ButtonItem, SwitchItem, HTMLItem } from '../../LayoutFormItem'
 import DragMoveItem from './DragMoveItem'
 
 function LayoutItem(props) {
@@ -11,6 +11,9 @@ function LayoutItem(props) {
         RenderItem = TempItem
     } else {
         switch (data.type) {
+            case 'input':
+                RenderItem = InputItem
+                break           
             case 'text':
                 RenderItem = TextItem
                 break

@@ -48,6 +48,7 @@ function FormComponentPanel(props) {
                             index={index}
                             data={item}
                             selectItem={selectItem}
+                            config={data.config}
                             handleSetSelectItem={handleSetSelectItem}
                         />)}
                     </ReactSortable>

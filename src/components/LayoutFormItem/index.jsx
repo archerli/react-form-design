@@ -1,6 +1,17 @@
 import React, { memo } from 'react';
 import IconFont from '../Icon'
-import { Form, Button, Switch } from 'antd'
+import { Form, Button, Switch, Input } from 'antd'
+
+const FormItemWarpper = (props) => {
+  const { data, config, children, ...rest } = props
+  return <Form.Item
+    label={data.label}
+    labelCol={config.layout === 'horizontal' ? config.labelCol : {}}
+    wrapperCol={config.layout === 'horizontal' ? config.wrapperCol : {}}
+    name={data.model}
+    {...rest}
+  >{children}</Form.Item>
+}
 
 export const TempItem = memo((props) => {
   const { data } = props
@@ -9,6 +20,15 @@ export const TempItem = memo((props) => {
     <span className="layout-item-temp-label">{data.label}</span>
   </div>
 })
+
+
+export const InputItem = memo((props) => {
+  const { data, config } = props
+  return <FormItemWarpper data={data} config={config}>
+    <Input />
+  </FormItemWarpper>
+})
+
 
 export const TextItem = memo((props) => {
   const { data } = props

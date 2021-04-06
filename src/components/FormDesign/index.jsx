@@ -12,6 +12,7 @@ import FormComponentPanel from './module/FormComponentPanel'
 import OperatingArea from './module/OperatingArea'
 import FormProperties from './module/FormProperties'
 import hyperid from 'hyperid'
+import ItemProperties from './module/ItemProperties';
 
 const { Panel } = Collapse;
 
@@ -45,6 +46,7 @@ const FormDesign = forwardRef((props, ref) => {
   const [updateTime, setUpdateTime] = useState(0)
   const [selectItem, setSelectItem] = useState({ key: '' })
   const [startType, setStartType] = useState("")
+  const [hideModel, setHideModel] = useState(false)
 
   useEffect(() => {
     // 计算需要显示的基础字段
@@ -88,13 +90,14 @@ const FormDesign = forwardRef((props, ref) => {
   //   result.splice(endIndex, 0, removed);
   //   return result;
   // };
+
   const onChooseBasics = (evt) => {
-    basics[evt.oldIndex].key = instance()
+    basics[evt.oldIndex].key = basics[evt.oldIndex].model = basics[evt.oldIndex].type + '_' + instance()
     setBasics(basics)
   }
 
   const onChooseLayout = (evt) => {
-    layout[evt.oldIndex].key = instance()
+    layout[evt.oldIndex].key = layout[evt.oldIndex].model = layout[evt.oldIndex].type + '_' + instance()
     setLayout(layout)
   }
 
@@ -102,6 +105,8 @@ const FormDesign = forwardRef((props, ref) => {
     let record = formConfig.list[evt.newIndex]
     if (record) handleSetSelectItem(record)
   }
+
+  const onItemPropertiesHide = useCallback(() => setShowPropertie(false), [])
 
   return (
     <div className="form-designer-container-9136076486841527">
@@ -144,6 +149,12 @@ const FormDesign = forwardRef((props, ref) => {
             setFormConfig={setFormConfig}
             previewOptions={previewOptions}
             setPreviewOptions={setPreviewOptions}
+          />
+          <ItemProperties
+            cls={`form-item-properties ${showPropertie ? 'show-properties' : ''}`}
+            selectItem={selectItem}
+            hideModel={hideModel}
+            onHide={onItemPropertiesHide}
           />
         </aside>
       </div>
