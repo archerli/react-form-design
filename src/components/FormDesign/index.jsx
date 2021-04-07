@@ -139,6 +139,7 @@ const FormDesign = forwardRef((props, ref) => {
             data={formConfig}
             setList={setList}
             selectItem={selectItem}
+            hideModel={hideModel}
             handleSetSelectItem={handleSetSelectItem}
           />
         </section>

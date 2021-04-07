@@ -1,9 +1,9 @@
 import React, { memo, useEffect } from 'react';
-import { TempItem, InputItem, TextItem, ButtonItem, SwitchItem, HTMLItem } from '../../LayoutFormItem'
+import { TempItem, InputItem, TextAreaItem, TextItem, ButtonItem, SwitchItem, HTMLItem } from '../../LayoutFormItem'
 import DragMoveItem from './DragMoveItem'
 
 function LayoutItem(props) {
-    const { index, selectItem, handleSetSelectItem, data = {} } = props
+    const { index, selectItem, handleSetSelectItem, hideModel, data = {} } = props
 
     let RenderItem = () => <></>
 
@@ -13,6 +13,9 @@ function LayoutItem(props) {
         switch (data.type) {
             case 'input':
                 RenderItem = InputItem
+                break           
+            case 'textarea':
+                RenderItem = TextAreaItem
                 break           
             case 'text':
                 RenderItem = TextItem
@@ -29,12 +32,19 @@ function LayoutItem(props) {
         }
     }
 
+    const onDelete = (ev) => {
+        ev.stopPropagation()
+        props.onDelete && props.onDelete(index, data)
+    }
+
     return (
         <div className="drag-move" >
             <DragMoveItem
                 record={data}
                 selectItem={selectItem}
+                hideModel={hideModel}
                 handleSetSelectItem={handleSetSelectItem}
+                onDelete={onDelete}
             >
                 <RenderItem {...props} />
             </DragMoveItem>

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import IconFont from '../Icon'
-import { Form, Button, Switch, Input } from 'antd'
+import { Form, Button, Switch, Input, } from 'antd'
 
 const FormItemWarpper = (props) => {
   const { data, config, children, ...rest } = props
@@ -21,14 +21,40 @@ export const TempItem = memo((props) => {
   </div>
 })
 
-
 export const InputItem = memo((props) => {
-  const { data, config } = props
-  return <FormItemWarpper data={data} config={config}>
-    <Input />
+  const { data, config, onChange } = props
+  const { placeholder, type, clearable, maxLength, disabled, width } = data.options || {}
+  return <FormItemWarpper data={data} config={config}  >
+    <Input
+      onChange={onChange}
+      style={{ width }}
+      placeholder={placeholder}
+      type={type}
+      allowClear={clearable}
+      maxLength={maxLength}
+      disabled={disabled}
+    />
   </FormItemWarpper>
 })
 
+export const TextAreaItem = memo((props) => {
+  const { data, config, onChange } = props
+  const { placeholder, type, clearable, maxLength, disabled, width, minRows, maxRows } = data.options || {}
+  return <FormItemWarpper data={data} config={config}>
+    <Input.TextArea
+    onChange={onChange}
+      style={{ width }}
+      placeholder={placeholder}
+      type={type}
+      allowClear={clearable}
+      maxLength={maxLength}
+      disabled={disabled}
+      autoSize={{ minRows, maxRows }}
+      rows={4}
+      
+    />
+  </FormItemWarpper>
+})
 
 export const TextItem = memo((props) => {
   const { data } = props

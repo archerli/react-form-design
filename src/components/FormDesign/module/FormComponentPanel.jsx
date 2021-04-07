@@ -5,7 +5,7 @@ import LayoutItem from './LayoutItem'
 
 
 function FormComponentPanel(props) {
-    const { data, setList, selectItem, handleSetSelectItem } = props
+    const { data, setList, selectItem, handleSetSelectItem, hideModel } = props
     const [form] = Form.useForm()
 
     useEffect(() => {
@@ -17,6 +17,18 @@ function FormComponentPanel(props) {
         if (record) {
             handleSetSelectItem && handleSetSelectItem(record)
         }
+    }
+
+    const onDelete = (index, item) => {
+        let nextIndex = index - 1
+        if (nextIndex < 0) nextIndex = index + 1
+        if (nextIndex > data.list.length - 1) nextIndex = data.list.length - 1
+        // if (nextIndex < 0) nextIndex = 0
+        let nextItem = data.list[nextIndex]
+        // if (nextIndex)
+        data.list.splice(index, 1)
+        setList([...data.list])
+        if (data.list.length) handleSetSelectItem({ ...nextItem })
     }
 
     return (
@@ -49,7 +61,9 @@ function FormComponentPanel(props) {
                             data={item}
                             selectItem={selectItem}
                             config={data.config}
+                            hideModel={hideModel}
                             handleSetSelectItem={handleSetSelectItem}
+                            onDelete={onDelete}
                         />)}
                     </ReactSortable>
                 </div>
