@@ -11,7 +11,7 @@ export const basicsList = [
     icon: "icon-write",
     options: {
       type: "text",
-      width: "100%", // 宽度
+      width: 100, // 宽度
       defaultValue: "", // 默认值
       placeholder: "请输入", // 没有输入时，提示文字
       clearable: false,
@@ -34,7 +34,7 @@ export const basicsList = [
     label: "文本框", // 标题文字
     icon: "icon-edit",
     options: {
-      width: "100%", // 宽度
+      width: "100", // 宽度
       minRows: 4,
       maxRows: 6,
       maxLength: null,

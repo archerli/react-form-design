@@ -1,33 +1,33 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import IconFont from '../Icon'
 import { Form, Button, Switch, Input, } from 'antd'
 
 const FormItemWarpper = (props) => {
-  const { data, config, children, ...rest } = props
+  const { data, config, children, form, ...rest } = props
+
+  useEffect(() => {
+    form.resetFields([data.model])
+  }, [data.options.defaultValue])
+
   return <Form.Item
     label={data.label}
     labelCol={config.layout === 'horizontal' ? config.labelCol : {}}
     wrapperCol={config.layout === 'horizontal' ? config.wrapperCol : {}}
     name={data.model}
+    initialValue={data.options.defaultValue}
+    hidden={data.options.hidden}
+    rules={data.rules}
     {...rest}
   >{children}</Form.Item>
 }
 
-export const TempItem = memo((props) => {
-  const { data } = props
-  return <div className="layout-item-temp moving">
-    <IconFont type={data.icon} className="icon" />
-    <span className="layout-item-temp-label">{data.label}</span>
-  </div>
-})
-
 export const InputItem = memo((props) => {
   const { data, config, onChange } = props
   const { placeholder, type, clearable, maxLength, disabled, width } = data.options || {}
-  return <FormItemWarpper data={data} config={config}  >
+  return <FormItemWarpper data={data} config={config} form={props.form} >
     <Input
       onChange={onChange}
-      style={{ width }}
+      style={{ width: width + '%' }}
       placeholder={placeholder}
       type={type}
       allowClear={clearable}
@@ -40,9 +40,9 @@ export const InputItem = memo((props) => {
 export const TextAreaItem = memo((props) => {
   const { data, config, onChange } = props
   const { placeholder, type, clearable, maxLength, disabled, width, minRows, maxRows } = data.options || {}
-  return <FormItemWarpper data={data} config={config}>
+  return <FormItemWarpper data={data} config={config} form={props.form}>
     <Input.TextArea
-    onChange={onChange}
+      onChange={onChange}
       style={{ width }}
       placeholder={placeholder}
       type={type}
@@ -51,7 +51,7 @@ export const TextAreaItem = memo((props) => {
       disabled={disabled}
       autoSize={{ minRows, maxRows }}
       rows={4}
-      
+
     />
   </FormItemWarpper>
 })

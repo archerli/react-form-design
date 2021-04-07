@@ -59,6 +59,7 @@ function FormComponentPanel(props) {
                             key={`layout_${index}`}
                             index={index}
                             data={item}
+                            form={form}
                             selectItem={selectItem}
                             config={data.config}
                             hideModel={hideModel}
@@ -67,7 +68,6 @@ function FormComponentPanel(props) {
                         />)}
                     </ReactSortable>
                 </div>
-
             </Form>
         </div>
     )

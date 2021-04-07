@@ -84,13 +84,6 @@ const FormDesign = forwardRef((props, ref) => {
     }
   }
 
-  // const reorder = (list, startIndex, endIndex) => {
-  //   const result = Array.from(list);
-  //   const [removed] = result.splice(startIndex, 1);
-  //   result.splice(endIndex, 0, removed);
-  //   return result;
-  // };
-
   const onChooseBasics = (evt) => {
     basics[evt.oldIndex].key = basics[evt.oldIndex].model = basics[evt.oldIndex].type + '_' + instance()
     setBasics(basics)
@@ -154,6 +147,8 @@ const FormDesign = forwardRef((props, ref) => {
           <ItemProperties
             cls={`form-item-properties ${showPropertie ? 'show-properties' : ''}`}
             selectItem={selectItem}
+            setList={setList}
+            list={formConfig.list}
             hideModel={hideModel}
             onHide={onItemPropertiesHide}
           />
