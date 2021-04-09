@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Form } from 'antd'
 import { ReactSortable } from "react-sortablejs";
 import LayoutItem from './LayoutItem'
+import { cloneDeep } from 'lodash-es'
 
 
 function FormComponentPanel(props) {
@@ -15,7 +16,7 @@ function FormComponentPanel(props) {
     const onDragStart = (evt) => {
         let record = data.list[evt.oldIndex]
         if (record) {
-            handleSetSelectItem && handleSetSelectItem(record)
+            handleSetSelectItem && handleSetSelectItem(cloneDeep(record))
         }
     }
 
@@ -23,9 +24,7 @@ function FormComponentPanel(props) {
         let nextIndex = index - 1
         if (nextIndex < 0) nextIndex = index + 1
         if (nextIndex > data.list.length - 1) nextIndex = data.list.length - 1
-        // if (nextIndex < 0) nextIndex = 0
         let nextItem = data.list[nextIndex]
-        // if (nextIndex)
         data.list.splice(index, 1)
         setList([...data.list])
         if (data.list.length) handleSetSelectItem({ ...nextItem })

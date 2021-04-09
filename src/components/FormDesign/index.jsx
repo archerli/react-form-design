@@ -13,6 +13,7 @@ import OperatingArea from './module/OperatingArea'
 import FormProperties from './module/FormProperties'
 import hyperid from 'hyperid'
 import ItemProperties from './module/ItemProperties';
+import { cloneDeep } from 'lodash';
 
 const { Panel } = Collapse;
 
@@ -95,7 +96,9 @@ const FormDesign = forwardRef((props, ref) => {
   }
 
   const onModelItemDragEnd = (evt) => {
-    let record = formConfig.list[evt.newIndex]
+    let record = cloneDeep(formConfig.list[evt.newIndex])
+    delete record.icon;
+    delete record.component;
     if (record) handleSetSelectItem(record)
   }
 

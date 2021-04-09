@@ -29,8 +29,9 @@ export const PropertiesWrapper = forwardRef((props, ref) => {
         for (let key in changedValues) {
             set(selectItem, key, changedValues[key])
         }
+        // console.log(selectItem)
         setList(list.map(d => {
-            if (d.key === selectItem.key) return { ...selectItem }
+            if (d.key === selectItem.key) return cloneDeep(selectItem)
             return d
         }))
     }
@@ -38,7 +39,7 @@ export const PropertiesWrapper = forwardRef((props, ref) => {
     const updateRules = (nextRules) => {
         selectItem.rules = nextRules
         setList(list.map(d => {
-            if (d.key === selectItem.key) return { ...selectItem }
+            if (d.key === selectItem.key) return cloneDeep(selectItem)
             return d
         }))
     }
