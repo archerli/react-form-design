@@ -1,13 +1,13 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { Form, Input, Select, Slider, Checkbox } from 'antd'
-import { PropertiesWrapper, ActionProperties, ValidateProperties } from './PropCommon'
+import { FormPropertiesWrapper, ActionProperties, ValidateProperties } from './PropCommon'
 
 const InputProperties = (props) => {
     const { selectItem } = props
     const { width, placeholder, defaultValue } = selectItem.options || {}
     const wrapRef = useRef()
 
-    return <PropertiesWrapper ref={wrapRef} {...props}>
+    return <FormPropertiesWrapper ref={wrapRef} {...props}>
         <Form.Item label="类型" name="options.type" initialValue={selectItem.options.type}>
             <Select placeholder="请选择类型">
                 <Select.Option value="text">text</Select.Option>
@@ -35,7 +35,7 @@ const InputProperties = (props) => {
         {/* 校验属性 */}
         <ValidateProperties {...props} wrapRef={wrapRef} />
 
-    </PropertiesWrapper>
+    </FormPropertiesWrapper>
 }
 
 export default InputProperties;

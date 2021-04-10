@@ -4,10 +4,9 @@ import { isNil, set } from 'lodash-es'
 import {
     DeleteOutlined
 } from '@ant-design/icons';
-import { cloneDeep } from 'lodash-es'
 import './index.less'
 
-export const PropertiesWrapper = forwardRef((props, ref) => {
+export const NormalPropertiesWrapper = forwardRef((props, ref) => {
     const { setList, list, selectItem = {}, children } = props
     const [form] = Form.useForm()
 
@@ -31,7 +30,7 @@ export const PropertiesWrapper = forwardRef((props, ref) => {
         }
         // console.log(selectItem)
         setList(list.map(d => {
-            if (d.key === selectItem.key) return cloneDeep(selectItem)
+            if (d.key === selectItem.key) return { ...selectItem }
             return d
         }))
     }
@@ -39,7 +38,7 @@ export const PropertiesWrapper = forwardRef((props, ref) => {
     const updateRules = (nextRules) => {
         selectItem.rules = nextRules
         setList(list.map(d => {
-            if (d.key === selectItem.key) return cloneDeep(selectItem)
+            if (d.key === selectItem.key) return { ...selectItem }
             return d
         }))
     }
@@ -53,11 +52,19 @@ export const PropertiesWrapper = forwardRef((props, ref) => {
         {isNil(selectItem.label) ? null : <Form.Item label={'标签'} name="label">
             <Input placeholder="请输入标签" />
         </Form.Item>}
-        {isNil(selectItem.model) ? null : <Form.Item label={'数据字段'} name="model">
+        {children}
+    </Form>
+})
+
+export const FormPropertiesWrapper = forwardRef((props, ref) => {
+    const { children, ...rest } = props
+
+    return <NormalPropertiesWrapper {...rest} ref={ref}>
+        {isNil(props.selectItem.model) ? null : <Form.Item label={'数据字段'} name="model">
             <Input placeholder="请输入数据字段" />
         </Form.Item>}
         {children}
-    </Form>
+    </NormalPropertiesWrapper>
 })
 
 export const ActionProperties = (props) => {
@@ -105,7 +112,7 @@ export const CustomRules = (props) => {
     }
 
     const onInput = (index, field, ev) => {
-        let nextList = cloneDeep(data)
+        let nextList = [...data]
         nextList[index][field] = ev.target.value
         updateRules && updateRules(nextList)
     }

@@ -112,7 +112,7 @@ const FormDesign = forwardRef((props, ref) => {
       <div className="content">
         <aside className="left">
           <Collapse
-            defaultActiveKey={['1']}
+            defaultActiveKey={['1', '4']}
           >
             {!basics.length ? null : <Panel header="基础控件" key="1">
               <CollapseItem

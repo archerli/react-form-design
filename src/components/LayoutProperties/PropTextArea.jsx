@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { Form, Input, Select, Slider, Checkbox } from 'antd'
-import { PropertiesWrapper, ActionProperties, ValidateProperties } from './PropCommon'
+import { FormPropertiesWrapper, ActionProperties, ValidateProperties } from './PropCommon'
 import { replaceNum, replaceLimit } from '../../utils'
 
 import './index.less'
@@ -18,7 +18,7 @@ const TextAreaProperties = (props) => {
         wrapRef.current.triggerFieldChange('options.maxRows', replaceLimit(replaceNum(ev.target.value), minRows))
     }
 
-    return <PropertiesWrapper ref={wrapRef} {...props}>
+    return <FormPropertiesWrapper ref={wrapRef} {...props}>
         <Form.Item label="占位内容" name="options.placeholder" initialValue={placeholder}>
             <Input placeholder="请输入占位内容" />
         </Form.Item>
@@ -66,7 +66,7 @@ const TextAreaProperties = (props) => {
         {/* 校验属性 */}
         <ValidateProperties {...props} wrapRef={wrapRef} />
 
-    </PropertiesWrapper>
+    </FormPropertiesWrapper>
 }
 
 export default TextAreaProperties;

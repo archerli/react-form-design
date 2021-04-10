@@ -87,3 +87,8 @@ export const DividerItem = memo((props) => {
   const { data, config, onChange } = props
   return <Divider orientation={data.options.orientation}>{data.label}</Divider>
 })
+
+export const GridItem = memo((props) => {
+  const { data, config, onChange } = props
+  return <div className="grid-box"></div>
+})
