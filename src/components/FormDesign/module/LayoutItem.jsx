@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { InputItem, TextAreaItem, TextItem, ButtonItem, SwitchItem, HTMLItem } from '../../LayoutFormItem'
+import { InputItem, TextAreaItem, TextItem, ButtonItem, SwitchItem, HTMLItem, DividerItem } from '../../LayoutFormItem'
 import DragMoveItem from './DragMoveItem'
 
 function LayoutItem(props) {
@@ -12,6 +12,7 @@ function LayoutItem(props) {
         'button': ButtonItem,
         'switch': SwitchItem,
         'html': HTMLItem,
+        'divider': DividerItem,
     }[data.type] || function () { return <></> }
 
     const onDelete = (ev) => {

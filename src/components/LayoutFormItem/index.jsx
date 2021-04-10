@@ -1,16 +1,16 @@
 import React, { memo, useEffect } from 'react';
 import IconFont from '../Icon'
-import { Form, Button, Switch, Input, } from 'antd'
+import { Form, Button, Switch, Input, Divider } from 'antd'
 
 const FormItemWarpper = (props) => {
-  const { data, config, children, form, ...rest } = props
+  const { data, config, children, form, showLabel = true, ...rest } = props
 
   useEffect(() => {
     form.resetFields([data.model])
-  }, [data.options.defaultValue])
+  }, [data.options.defaultValue, data.options.minRows])
 
   return <Form.Item
-    label={data.label}
+    label={showLabel ? data.label : ''}
     labelCol={config.layout === 'horizontal' ? config.labelCol : {}}
     wrapperCol={config.layout === 'horizontal' ? config.wrapperCol : {}}
     name={data.model}
@@ -43,14 +43,14 @@ export const TextAreaItem = memo((props) => {
   return <FormItemWarpper data={data} config={config} form={props.form}>
     <Input.TextArea
       onChange={onChange}
-      style={{ width }}
+      style={{ width: width + '%' }}
       placeholder={placeholder}
       type={type}
       allowClear={clearable}
       maxLength={maxLength}
       disabled={disabled}
       autoSize={{ minRows, maxRows }}
-      rows={4}
+      rows={minRows}
 
     />
   </FormItemWarpper>
@@ -81,4 +81,9 @@ export const SwitchItem = memo((props) => {
 export const HTMLItem = memo((props) => {
   const { data } = props
   return <div dangerouslySetInnerHTML={{ __html: data.options.defaultValue }}></div>
+})
+
+export const DividerItem = memo((props) => {
+  const { data, config, onChange } = props
+  return <Divider orientation={data.options.orientation}>{data.label}</Divider>
 })

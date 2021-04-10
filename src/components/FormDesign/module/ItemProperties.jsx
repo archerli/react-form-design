@@ -1,12 +1,13 @@
 import React from 'react'
 import { DoubleRightOutlined } from '@ant-design/icons'
-import { InputProperties } from '../../LayoutProperties'
+import { InputProperties, TextAreaProperties } from '../../LayoutProperties'
 
 function ItemProperties(props) {
     const { cls, selectItem, list, setList, onHide } = props
 
     const Component = {
-        'input': InputProperties
+        'input': InputProperties,
+        'textarea': TextAreaProperties,
     }[selectItem.type] || function () { return <></> }
 
     return (

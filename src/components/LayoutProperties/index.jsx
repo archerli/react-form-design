@@ -1,3 +1,4 @@
 import React from 'react';
 import InputProperties from './PropInput'
-export { InputProperties }
+import TextAreaProperties from './PropTextArea'
+export { InputProperties, TextAreaProperties }

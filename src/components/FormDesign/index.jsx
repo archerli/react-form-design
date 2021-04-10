@@ -97,9 +97,12 @@ const FormDesign = forwardRef((props, ref) => {
 
   const onModelItemDragEnd = (evt) => {
     let record = cloneDeep(formConfig.list[evt.newIndex])
-    delete record.icon;
-    delete record.component;
-    if (record) handleSetSelectItem(record)
+
+    if (record) {
+      delete record.icon;
+      delete record.component;
+      handleSetSelectItem(record)
+    }
   }
 
   const onItemPropertiesHide = useCallback(() => setShowPropertie(false), [])
