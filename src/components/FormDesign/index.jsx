@@ -60,8 +60,8 @@ const FormDesign = forwardRef((props, ref) => {
   }, [layoutList])
 
   const setList = (res) => {
+    // console.log('setList', res)
     formConfig.list = res
-    // console.log(formConfig.list)
     setFormConfig({ ...formConfig })
   }
 
@@ -95,14 +95,31 @@ const FormDesign = forwardRef((props, ref) => {
     setLayout(layout)
   }
 
-  const onModelItemDragEnd = (evt) => {
-    let record = cloneDeep(formConfig.list[evt.newIndex])
+  // const onModelItemDragEnd = (evt) => {
+  //   let record = cloneDeep(formConfig.list[evt.newIndex])
+  //   console.log('onModelItemDragEnd', record)
+  //   if (record) {
+  //     delete record.icon;
+  //     delete record.component;
+  //     handleSetSelectItem(record)
+  //   }
+  // }
 
-    if (record) {
-      delete record.icon;
-      delete record.component;
-      handleSetSelectItem(record)
-    }
+  const onAdd = (evt) => {
+    setTimeout(() => {
+      let record = cloneDeep(formConfig.list[evt.newIndex])
+      if (record) {
+        delete record.icon;
+        delete record.component;
+        handleSetSelectItem(record)
+      }
+    }, 0)
+  }
+
+  const onColAdd = (item) => {
+    setTimeout(() => {
+
+    }, 0)
   }
 
   const onItemPropertiesHide = useCallback(() => setShowPropertie(false), [])
@@ -118,7 +135,7 @@ const FormDesign = forwardRef((props, ref) => {
               <CollapseItem
                 list={basics}
                 onChoose={onChooseBasics}
-                onEnd={onModelItemDragEnd}
+                // onEnd={onModelItemDragEnd}
               />
             </Panel>}
 
@@ -126,7 +143,7 @@ const FormDesign = forwardRef((props, ref) => {
               <CollapseItem
                 list={layout}
                 onChoose={onChooseLayout}
-                onEnd={onModelItemDragEnd}
+                // onEnd={onModelItemDragEnd}
               />
             </Panel>}
           </Collapse>
@@ -140,6 +157,8 @@ const FormDesign = forwardRef((props, ref) => {
             selectItem={selectItem}
             hideModel={hideModel}
             handleSetSelectItem={handleSetSelectItem}
+            onAdd={onAdd}
+            onColAdd={onColAdd}
           />
         </section>
 

@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Form } from 'antd'
 import { ReactSortable } from "react-sortablejs";
 import LayoutItem from './LayoutItem'
 
 
 function FormComponentPanel(props) {
-    const { data, setList, selectItem, handleSetSelectItem, hideModel } = props
+    const { data, setList, selectItem, hideModel, handleSetSelectItem, onAdd, onColAdd } = props
     const [form] = Form.useForm()
 
     useEffect(() => {
@@ -19,7 +19,7 @@ function FormComponentPanel(props) {
         }
     }
 
-    const onDelete = (index, item) => {
+    const onDelete = (index) => {
         let nextIndex = index - 1
         if (nextIndex < 0) nextIndex = index + 1
         if (nextIndex > data.list.length - 1) nextIndex = data.list.length - 1
@@ -27,6 +27,11 @@ function FormComponentPanel(props) {
         data.list.splice(index, 1)
         setList([...data.list])
         if (data.list.length) handleSetSelectItem({ ...nextItem })
+    }
+
+    const setListOfIndex = (index, d) => {
+        data.list[index] = d
+        setList && setList(data.list)
     }
 
     return (
@@ -52,23 +57,31 @@ function FormComponentPanel(props) {
                         ghostClass={'moving'}
                         handle={'.drag-move'}
                         onStart={onDragStart}
+                        onAdd={onAdd}
                     >
-                        {data.list.map((item, index) => <LayoutItem
-                            key={`layout_${index}`}
-                            index={index}
-                            data={item}
-                            form={form}
-                            selectItem={selectItem}
-                            config={data.config}
-                            hideModel={hideModel}
-                            handleSetSelectItem={handleSetSelectItem}
-                            onDelete={onDelete}
-                        />)}
+                        {data.list.map((item, index) => {
+                            return <LayoutItem
+                                key={item.key}
+                                index={index}
+                                data={item}
+                                form={form}
+                                selectItem={selectItem}
+                                config={data.config}
+                                hideModel={hideModel}
+                                handleSetSelectItem={handleSetSelectItem}
+                                setListOfIndex={setListOfIndex}
+                                onDelete={onDelete}
+                                onColAdd={onColAdd}
+                            />
+                        })}
                     </ReactSortable>
                 </div>
             </Form>
+
         </div>
     )
 }
+
+
 
 export default FormComponentPanel;

@@ -1,9 +1,8 @@
 import React, { memo, useEffect } from 'react';
 import { InputItem, TextAreaItem, TextItem, ButtonItem, SwitchItem, HTMLItem, DividerItem, GridItem } from '../../LayoutFormItem'
-import DragMoveItem from './DragMoveItem'
 
 function LayoutItem(props) {
-    const { index, selectItem, handleSetSelectItem, hideModel, data = {} } = props
+    const { index, selectItem, handleSetSelectItem, onDelete, hideModel, data = {} } = props
 
     const Component = {
         'input': InputItem,
@@ -14,24 +13,23 @@ function LayoutItem(props) {
         'html': HTMLItem,
         'divider': DividerItem,
         'grid': GridItem,
-    }[data.type] || function () { return <></> }
+    }[data.type]
 
-    const onDelete = (ev) => {
-        ev.stopPropagation()
-        props.onDelete && props.onDelete(index, data)
+    const active = data.key && data.key === selectItem.key
+
+    const onSelect = (e) => {
+        e.stopPropagation()
+        handleSetSelectItem && handleSetSelectItem(data)
+    }
+
+    const onItemDelte = (e) => {
+        e.stopPropagation()
+        onDelete && onDelete(index, data)
     }
 
     return (
         <div className="drag-move" >
-            <DragMoveItem
-                record={data}
-                selectItem={selectItem}
-                hideModel={hideModel}
-                handleSetSelectItem={handleSetSelectItem}
-                onDelete={onDelete}
-            >
-                <Component {...props} />
-            </DragMoveItem>
+            {Component ? <Component {...props} active={active} onSelect={onSelect} onDelete={onItemDelte} /> : null}
         </div>
     );
 }

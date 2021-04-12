@@ -10538,7 +10538,7 @@ sort-keys@^1.0.0:
 
 sortablejs@^1.13.0:
   version "1.13.0"
-  resolved "https://registry.npm.taobao.org/sortablejs/download/sortablejs-1.13.0.tgz#3ab2473f8c69ca63569e80b1cd1b5669b51269e9"
+  resolved "https://registry.npm.taobao.org/sortablejs/download/sortablejs-1.13.0.tgz?cache=0&sync_timestamp=1610070469676&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsortablejs%2Fdownload%2Fsortablejs-1.13.0.tgz#3ab2473f8c69ca63569e80b1cd1b5669b51269e9"
   integrity sha1-OrJHP4xpymNWnoCxzRtWabUSaek=
 
 source-list-map@^2.0.0:
@@ -11127,8 +11127,8 @@ timsort@^0.3.0:
 
 tiny-invariant@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.1.0.tgz#634c5f8efdc27714b7f386c35e6760991d230875"
-  integrity sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==
+  resolved "https://registry.npm.taobao.org/tiny-invariant/download/tiny-invariant-1.1.0.tgz#634c5f8efdc27714b7f386c35e6760991d230875"
+  integrity sha1-Y0xfjv3CdxS384bDXmdgmR0jCHU=
 
 tmpl@1.0.x:
   version "1.0.4"

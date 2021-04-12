@@ -583,7 +583,7 @@ export const layoutList = [
     icon: "icon-qiapian",
     list: [],
     key: "",
-    model: ""
+    model: "",
   },
   {
     type: "tabs",
@@ -629,7 +629,8 @@ export const layoutList = [
       gutter: 0
     },
     key: "",
-    model: ""
+    model: "",
+    hideModel: true,
   },
   {
     type: "table",

@@ -12,3 +12,11 @@ export function replaceLimit(num, min, max) {
     if (!isNil(max) && nextNum > max) nextNum = max
     return nextNum
 }
+
+export function findValidIndex(index, list) {
+    let nextIndex = index - 1
+    if (nextIndex < 0) nextIndex = index + 1
+    if (nextIndex > list.length - 1) nextIndex = list.length - 1
+    let nextItem = list[nextIndex]
+    return nextItem
+}

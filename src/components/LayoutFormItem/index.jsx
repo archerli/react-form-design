@@ -1,30 +1,37 @@
 import React, { memo, useEffect } from 'react';
 import IconFont from '../Icon'
-import { Form, Button, Switch, Input, Divider } from 'antd'
+import { Form, Button, Switch, Input, Divider, Row, Col } from 'antd'
+import GridItem from './GridItem'
+import FormItemDragWrap from './FormItemDragWrap'
+export {
+  GridItem
+}
 
 const FormItemWarpper = (props) => {
-  const { data, config, children, form, showLabel = true, ...rest } = props
+  const { data, config, children, form, showLabel = true, formProps = {} } = props
 
   useEffect(() => {
     form.resetFields([data.model])
   }, [data.options.defaultValue, data.options.minRows])
 
-  return <Form.Item
-    label={showLabel ? data.label : ''}
-    labelCol={config.layout === 'horizontal' ? config.labelCol : {}}
-    wrapperCol={config.layout === 'horizontal' ? config.wrapperCol : {}}
-    name={data.model}
-    initialValue={data.options.defaultValue}
-    hidden={data.options.hidden}
-    rules={data.rules}
-    {...rest}
-  >{children}</Form.Item>
+  return <FormItemDragWrap {...props}>
+    <Form.Item
+      label={showLabel ? data.label : ''}
+      labelCol={config.layout === 'horizontal' ? config.labelCol : {}}
+      wrapperCol={config.layout === 'horizontal' ? config.wrapperCol : {}}
+      name={data.model}
+      initialValue={data.options.defaultValue}
+      hidden={data.options.hidden}
+      rules={data.rules}
+      {...formProps}
+    >{children}</Form.Item>
+  </FormItemDragWrap>
 }
 
 export const InputItem = memo((props) => {
   const { data, config, onChange } = props
   const { placeholder, type, clearable, maxLength, disabled, width } = data.options || {}
-  return <FormItemWarpper data={data} config={config} form={props.form} >
+  return <FormItemWarpper {...props} >
     <Input
       onChange={onChange}
       style={{ width: width + '%' }}
@@ -40,7 +47,7 @@ export const InputItem = memo((props) => {
 export const TextAreaItem = memo((props) => {
   const { data, config, onChange } = props
   const { placeholder, type, clearable, maxLength, disabled, width, minRows, maxRows } = data.options || {}
-  return <FormItemWarpper data={data} config={config} form={props.form}>
+  return <FormItemWarpper {...props} >
     <Input.TextArea
       onChange={onChange}
       style={{ width: width + '%' }}
@@ -58,37 +65,42 @@ export const TextAreaItem = memo((props) => {
 
 export const TextItem = memo((props) => {
   const { data } = props
-  return <Form.Item>
-    <label>{data.label}</label>
-  </Form.Item>
+  return <FormItemDragWrap {...props}>
+    <Form.Item>
+      <label>{data.label}</label>
+    </Form.Item>
+  </FormItemDragWrap>
 })
 
 export const ButtonItem = memo((props) => {
   const { data } = props
-  return <Form.Item>
-    <Button>{data.label}</Button>
-  </Form.Item>
+  return <FormItemDragWrap {...props}>
+    <Form.Item>
+      <Button>{data.label}</Button>
+    </Form.Item>
+  </FormItemDragWrap>
 })
 
 
 export const SwitchItem = memo((props) => {
   const { data } = props
-  return <Form.Item>
-    <Switch>{data.label}</Switch>
-  </Form.Item>
+  return <FormItemDragWrap {...props}>
+    <Form.Item>
+      <Switch>{data.label}</Switch>
+    </Form.Item>
+  </FormItemDragWrap>
 })
 
 export const HTMLItem = memo((props) => {
   const { data } = props
-  return <div dangerouslySetInnerHTML={{ __html: data.options.defaultValue }}></div>
+  return <FormItemDragWrap {...props}>
+    <div dangerouslySetInnerHTML={{ __html: data.options.defaultValue }}></div>
+  </FormItemDragWrap>
 })
 
 export const DividerItem = memo((props) => {
   const { data, config, onChange } = props
-  return <Divider orientation={data.options.orientation}>{data.label}</Divider>
-})
-
-export const GridItem = memo((props) => {
-  const { data, config, onChange } = props
-  return <div className="grid-box"></div>
+  return <FormItemDragWrap {...props}>
+    <Divider orientation={data.options.orientation}>{data.label}</Divider>
+  </FormItemDragWrap>
 })
