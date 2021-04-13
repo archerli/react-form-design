@@ -7,7 +7,7 @@ import {
 import './index.less'
 
 export const NormalPropertiesWrapper = forwardRef((props, ref) => {
-    const { setList, list, selectItem = {}, children } = props
+    const { setList, list, selectItem = {}, handleSetSelectItem, children } = props
     const [form] = Form.useForm()
 
     useImperativeHandle(ref, () => ({
@@ -37,6 +37,7 @@ export const NormalPropertiesWrapper = forwardRef((props, ref) => {
 
     const updateRules = (nextRules) => {
         selectItem.rules = nextRules
+        handleSetSelectItem(selectItem)
         setList(list.map(d => {
             if (d.key === selectItem.key) return { ...selectItem }
             return d

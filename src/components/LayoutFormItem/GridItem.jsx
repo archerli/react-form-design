@@ -4,10 +4,10 @@ import { ReactSortable } from "react-sortablejs";
 import LayoutItem from '../FormDesign/module/LayoutItem'
 import { ActionGroup } from './FormItemDragWrap'
 import { cloneDeep, get, set } from 'lodash';
-import { findValidIndex } from '../../utils'
+import { findValidItem } from '../../utils'
 
 const GridItem = memo((props) => {
-    const { data, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex, onColAdd } = props
+    const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex, onColAd } = props
     const active = data.key && data.key === selectItem.key
 
     const setGridList = (d, i, list) => {
@@ -31,7 +31,7 @@ const GridItem = memo((props) => {
         set(data.columns, `[${colIndex}].list`, list)
         setListOfIndex(index, cloneDeep(data))
 
-        let nextItem = findValidIndex(itemIndex, list)
+        let nextItem = findValidItem(itemIndex, list)
         if (nextItem) {
             handleSetSelectItem({ ...nextItem })
         } else {
@@ -63,7 +63,7 @@ const GridItem = memo((props) => {
                                     data={item}
                                     form={form}
                                     selectItem={selectItem}
-                                    config={data.config}
+                                    config={config}
                                     hideModel={hideModel}
                                     handleSetSelectItem={handleSetSelectItem}
                                     onDelete={(itemIndex, data) => onGridDelete(i, itemIndex, data)}

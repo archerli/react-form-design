@@ -176,6 +176,7 @@ const FormDesign = forwardRef((props, ref) => {
             list={formConfig.list}
             hideModel={hideModel}
             onHide={onItemPropertiesHide}
+            handleSetSelectItem={handleSetSelectItem}
           />
         </aside>
       </div>

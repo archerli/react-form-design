@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { Form } from 'antd'
 import { ReactSortable } from "react-sortablejs";
 import LayoutItem from './LayoutItem'
+import { findValidItem } from '../../../utils'
 
 
 function FormComponentPanel(props) {
@@ -20,13 +21,12 @@ function FormComponentPanel(props) {
     }
 
     const onDelete = (index) => {
-        let nextIndex = index - 1
-        if (nextIndex < 0) nextIndex = index + 1
-        if (nextIndex > data.list.length - 1) nextIndex = data.list.length - 1
-        let nextItem = data.list[nextIndex]
         data.list.splice(index, 1)
         setList([...data.list])
-        if (data.list.length) handleSetSelectItem({ ...nextItem })
+
+        let nextItem = findValidItem(index, data.list)
+
+        handleSetSelectItem({ ...nextItem })
     }
 
     const setListOfIndex = (index, d) => {
@@ -77,7 +77,6 @@ function FormComponentPanel(props) {
                     </ReactSortable>
                 </div>
             </Form>
-
         </div>
     )
 }
