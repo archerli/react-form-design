@@ -9,24 +9,41 @@ import { findValidItem } from '../../utils'
 function CardItem(props) {
     const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex, onColAd } = props
     const active = data.key && data.key === selectItem.key
+    const addEventRef = useRef()
 
     const setNestedList = (list) => {
-        data.list = cloneDeep(list)
-        setListOfIndex(index, data)
+        // 新增 与 删除都会执行，新增完了事件对象置空
+        if (addEventRef.current) {
+            data.list = cloneDeep(list)
+            setListOfIndex(index, data)
+            let record = data.list[addEventRef.current.newIndex]
+            // 从容器中移出元素时，也会执行，此时 item 值为 undfined
+            if (record) {
+                delete record.icon;
+                delete record.component;
+                handleSetSelectItem(record)
+            }
+            addEventRef.current = null
+        } else {
+            data.list = list
+            setListOfIndex(index, data)
+        }
     }
 
-    const setChildNestedList = (i, d) => {
+    const onDragStart = (evt) => {
+        let record = data.list[evt.oldIndex]
+        if (record) {
+            handleSetSelectItem(record)
+        }
+    }
+
+    const setChildListOfIndex = (i, d) => {
         data.list[i] = d
         setListOfIndex(index, data)
     }
 
     const onAdd = (evt) => {
-        setTimeout(() => {
-            data.list = cloneDeep(data.list)
-            let item = data.list[evt.newIndex]
-            console.log(item)
-            if (item) handleSetSelectItem(item)
-        }, 0)
+        addEventRef.current = evt
     }
 
     const onNestedDelete = (itemIndex) => {
@@ -57,6 +74,7 @@ function CardItem(props) {
                             animation={180}
                             ghostClass={'moving'}
                             handle={'.drag-move'}
+                            onStart={onDragStart}
                             onAdd={onAdd}
                         >
                             {
@@ -68,7 +86,7 @@ function CardItem(props) {
                                     selectItem={selectItem}
                                     config={config}
                                     hideModel={hideModel}
-                                    setListOfIndex={setChildNestedList}
+                                    setListOfIndex={setChildListOfIndex}
                                     handleSetSelectItem={handleSetSelectItem}
                                     onDelete={onNestedDelete}
                                 />)

@@ -6,7 +6,7 @@ import { findValidItem } from '../../../utils'
 
 
 function FormComponentPanel(props) {
-    const { data, setList, selectItem, hideModel, handleSetSelectItem, onAdd, onColAdd } = props
+    const { data, setList, selectItem, hideModel, handleSetSelectItem, setListOfIndex, onAdd, onColAdd } = props
     const [form] = Form.useForm()
 
     useEffect(() => {
@@ -27,11 +27,6 @@ function FormComponentPanel(props) {
         let nextItem = findValidItem(index, data.list)
 
         handleSetSelectItem({ ...nextItem })
-    }
-
-    const setListOfIndex = (index, d) => {
-        data.list[index] = d
-        setList && setList(data.list)
     }
 
     return (

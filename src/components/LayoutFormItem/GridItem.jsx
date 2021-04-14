@@ -9,23 +9,49 @@ import { findValidItem } from '../../utils'
 const GridItem = memo((props) => {
     const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex, onColAd } = props
     const active = data.key && data.key === selectItem.key
+    const addEventRef = useRef()
 
     const setGridList = (d, i, list) => {
-        // console.log(data, list)
-        data.columns[i].list = cloneDeep(list)
-        if (setListOfIndex) setListOfIndex(index, cloneDeep(data))
+        // 新增 与 删除都会执行，新增完了事件对象置空
+        if (addEventRef.current) {
+            data.columns[i].list = cloneDeep(list)
+            setListOfIndex(index, data)
+
+            let record = data.columns[i].list[addEventRef.current.newIndex]
+            // 从容器中移出元素时，也会执行，此时 item 值为 undfined
+            if (record) {
+                delete record.icon;
+                delete record.component;
+                handleSetSelectItem(record)
+            }
+            addEventRef.current = null
+        } else {
+            data.columns[i].list = list
+            setListOfIndex(index, data)
+        }
     }
 
     const setChildNestedList = (i, d) => {
+        // console.log(i, d)
+        for (let col of data.columns) {
+            col.list = col.list.map((item) => {
+                if (item.key === d.key) return { ...d }
+                return item
+            })
+        }
+        setListOfIndex(index, data)
         // console.log(index, data)
     }
 
-    const onAdd = (i, evt) => {
-        setTimeout(() => {
-            data.columns[i].list = cloneDeep(data.columns[i].list)
-            let item = data.columns[i].list[evt.newIndex]
-            if (item) handleSetSelectItem(item)
-        }, 0)
+    const onAdd = (evt) => {
+        addEventRef.current = evt
+    }
+
+    const onDragStart = (i, evt) => {
+        let record = data.columns[i].list[evt.oldIndex]
+        if (record) {
+            handleSetSelectItem(record)
+        }
     }
 
     const onGridDelete = (colIndex, itemIndex, item) => {
@@ -34,7 +60,7 @@ const GridItem = memo((props) => {
         list.splice(itemIndex, 1)
 
         set(data.columns, `[${colIndex}].list`, list)
-        // if (setListOfIndex) setListOfIndex(index, cloneDeep(data))
+        // setListOfIndex(index, data)
 
         let nextItem = findValidItem(itemIndex, list)
         if (nextItem) {
@@ -59,7 +85,8 @@ const GridItem = memo((props) => {
                                 animation={180}
                                 ghostClass={'moving'}
                                 handle={'.drag-move'}
-                                onAdd={(evt) => onAdd(i, evt)}
+                                onAdd={onAdd}
+                                onStart={(evt) => onDragStart(i, evt)}
                             >
                                 {d.list.map((item, j) => <LayoutItem
                                     key={`${item.key}`}

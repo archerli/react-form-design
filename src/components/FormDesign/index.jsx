@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useEffect, useState, useCallback } from 'react';
+import React, { forwardRef, useImperativeHandle, useEffect, useState, useCallback, useRef } from 'react';
 import { Collapse } from 'antd';
 import {
   basicsList,
@@ -13,7 +13,8 @@ import OperatingArea from './module/OperatingArea'
 import FormProperties from './module/FormProperties'
 import hyperid from 'hyperid'
 import ItemProperties from './module/ItemProperties';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isNil } from 'lodash';
+import { get } from 'lodash-es';
 
 const { Panel } = Collapse;
 
@@ -48,6 +49,7 @@ const FormDesign = forwardRef((props, ref) => {
   const [selectItem, setSelectItem] = useState({ key: '' })
   const [startType, setStartType] = useState("")
   const [hideModel, setHideModel] = useState(false)
+  const addEventRef = useRef()
 
   useEffect(() => {
     // 计算需要显示的基础字段
@@ -61,8 +63,26 @@ const FormDesign = forwardRef((props, ref) => {
 
   const setList = (res) => {
     console.log('setList', res)
-    formConfig.list = res
-    setFormConfig({ ...formConfig })
+    // 新增 与 删除都会执行，新增完了事件对象置空
+    if (!isNil(addEventRef.current)) {
+      formConfig.list = cloneDeep(res)
+      setFormConfig({ ...formConfig })
+      let record = formConfig.list[get(addEventRef, 'current.newIndex')]
+      if (record) {
+        delete record.icon;
+        delete record.component;
+        handleSetSelectItem(record)
+      }
+      addEventRef.current = null
+    } else {
+      formConfig.list = res
+      setFormConfig({ ...formConfig })
+    }
+  }
+
+  const setListOfIndex = (index, d) => {
+    formConfig.list[index] = d
+    setList && setList(formConfig.list)
   }
 
   const handleSetSelectItem = (record) => {
@@ -95,33 +115,8 @@ const FormDesign = forwardRef((props, ref) => {
     setLayout(layout)
   }
 
-  // const onModelItemDragEnd = (evt) => {
-  //   let record = cloneDeep(formConfig.list[evt.newIndex])
-  //   console.log('onModelItemDragEnd', record)
-  //   if (record) {
-  //     delete record.icon;
-  //     delete record.component;
-  //     handleSetSelectItem(record)
-  //   }
-  // }
-
   const onAdd = (evt) => {
-    setTimeout(() => {
-      formConfig.list = cloneDeep(formConfig.list)
-      let record = formConfig.list[evt.newIndex]
-      if (record) {
-        delete record.icon;
-        delete record.component;
-        handleSetSelectItem(record)
-        setList(formConfig.list)
-      }
-    }, 0)
-  }
-
-  const onColAdd = (item) => {
-    setTimeout(() => {
-
-    }, 0)
+    addEventRef.current = evt
   }
 
   const onItemPropertiesHide = useCallback(() => setShowPropertie(false), [])
@@ -160,7 +155,7 @@ const FormDesign = forwardRef((props, ref) => {
             hideModel={hideModel}
             handleSetSelectItem={handleSetSelectItem}
             onAdd={onAdd}
-            onColAdd={onColAdd}
+            setListOfIndex={setListOfIndex}
           />
         </section>
 
