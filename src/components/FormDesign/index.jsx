@@ -60,7 +60,7 @@ const FormDesign = forwardRef((props, ref) => {
   }, [layoutList])
 
   const setList = (res) => {
-    // console.log('setList', res)
+    console.log('setList', res)
     formConfig.list = res
     setFormConfig({ ...formConfig })
   }
@@ -107,11 +107,13 @@ const FormDesign = forwardRef((props, ref) => {
 
   const onAdd = (evt) => {
     setTimeout(() => {
-      let record = cloneDeep(formConfig.list[evt.newIndex])
+      formConfig.list = cloneDeep(formConfig.list)
+      let record = formConfig.list[evt.newIndex]
       if (record) {
         delete record.icon;
         delete record.component;
         handleSetSelectItem(record)
+        setList(formConfig.list)
       }
     }, 0)
   }
@@ -135,7 +137,7 @@ const FormDesign = forwardRef((props, ref) => {
               <CollapseItem
                 list={basics}
                 onChoose={onChooseBasics}
-                // onEnd={onModelItemDragEnd}
+              // onEnd={onModelItemDragEnd}
               />
             </Panel>}
 
@@ -143,7 +145,7 @@ const FormDesign = forwardRef((props, ref) => {
               <CollapseItem
                 list={layout}
                 onChoose={onChooseLayout}
-                // onEnd={onModelItemDragEnd}
+              // onEnd={onModelItemDragEnd}
               />
             </Panel>}
           </Collapse>

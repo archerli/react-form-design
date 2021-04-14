@@ -11,7 +11,7 @@ const FormItemWarpper = (props) => {
   const { data, config, children, form, showLabel = true, formProps = {} } = props
 
   useEffect(() => {
-    form.resetFields([data.model])
+    // form.resetFields([data.model])
   }, [data.options.defaultValue, data.options.minRows])
 
   return <FormItemDragWrap {...props}>
@@ -19,8 +19,8 @@ const FormItemWarpper = (props) => {
       label={showLabel ? data.label : ''}
       labelCol={config.layout === 'horizontal' ? config.labelCol : {}}
       wrapperCol={config.layout === 'horizontal' ? config.wrapperCol : {}}
-      name={data.model}
-      initialValue={data.options.defaultValue}
+      // name={data.model}
+      // initialValue={data.options.defaultValue}
       hidden={data.options.hidden}
       rules={data.rules}
       {...formProps}
@@ -30,13 +30,14 @@ const FormItemWarpper = (props) => {
 
 export const InputItem = memo((props) => {
   const { data, config, onChange } = props
-  const { placeholder, type, clearable, maxLength, disabled, width } = data.options || {}
+  const { placeholder, type, clearable, maxLength, disabled, width, defaultValue } = data.options || {}
   return <FormItemWarpper {...props} >
     <Input
       onChange={onChange}
       style={{ width: width + '%' }}
       placeholder={placeholder}
       type={type}
+      value={defaultValue}
       allowClear={clearable}
       maxLength={maxLength}
       disabled={disabled}
@@ -46,11 +47,12 @@ export const InputItem = memo((props) => {
 
 export const TextAreaItem = memo((props) => {
   const { data, config, onChange } = props
-  const { placeholder, type, clearable, maxLength, disabled, width, minRows, maxRows } = data.options || {}
+  const { defaultValue, placeholder, type, clearable, maxLength, disabled, width, minRows = 1, maxRows = 4 } = data.options || {}
   return <FormItemWarpper {...props} >
     <Input.TextArea
       onChange={onChange}
       style={{ width: width + '%' }}
+      value={defaultValue}
       placeholder={placeholder}
       type={type}
       allowClear={clearable}

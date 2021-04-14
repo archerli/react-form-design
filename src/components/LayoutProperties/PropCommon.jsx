@@ -30,7 +30,18 @@ export const NormalPropertiesWrapper = forwardRef((props, ref) => {
         }
         // console.log(selectItem)
         setList(list.map(d => {
+            // console.log(d)
             if (d.key === selectItem.key) return { ...selectItem }
+
+            if (d.columns) {
+                for (let col of d.columns) {
+                    col.list = col.list.map(colItem => {
+                        if (colItem.key === selectItem.key) return { ...selectItem }
+                        return colItem
+                    })
+                }
+            }
+            
             return d
         }))
     }
@@ -47,7 +58,7 @@ export const NormalPropertiesWrapper = forwardRef((props, ref) => {
     return <Form
         form={form}
         layout={'vertical'}
-        initialValues={selectItem}
+        value={selectItem}
         onValuesChange={onValuesChange}
     >
         {isNil(selectItem.label) ? null : <Form.Item label={'标签'} name="label">

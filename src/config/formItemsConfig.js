@@ -630,7 +630,7 @@ export const layoutList = [
     },
     key: "",
     model: "",
-    hideModel: true,
+    hideModel: true
   },
   {
     type: "table",
