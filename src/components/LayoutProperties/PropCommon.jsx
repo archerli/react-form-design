@@ -33,8 +33,26 @@ export const NormalPropertiesWrapper = forwardRef((props, ref) => {
         for (let key in changedValues) {
             set(selectItem, key, changedValues[key])
         }
-        // console.log(selectItem)
-        setList([...list])
+        let nextList = dfsUpdateList(list, selectItem)
+        setList(nextList)
+    }
+
+    const dfsUpdateList = (list, item) => {
+        let nextList = list.map(d => {
+            if (d.key === item.key) return { ...item }
+
+            if (d.list) {
+                d.list = dfsUpdateList(d.list, item)
+            }
+
+            if (d.columns) {
+                for (let col of d.columns) {
+                    col.list = dfsUpdateList(col.list, item)
+                }
+            }
+            return d
+        })
+        return nextList
     }
 
     const updateRules = (nextRules) => {

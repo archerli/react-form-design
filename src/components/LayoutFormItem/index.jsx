@@ -16,7 +16,7 @@ const FormItemWarpper = (props) => {
   const { data, config, children, form, showLabel = true, formProps = {} } = props
 
   useEffect(() => {
-    // form.resetFields([data.model])
+    form.resetFields([data.model])
   }, [data.options.defaultValue, data.options.minRows])
 
   return <FormItemDragWrap {...props}>
@@ -24,8 +24,8 @@ const FormItemWarpper = (props) => {
       label={showLabel ? data.label : ''}
       labelCol={config.layout === 'horizontal' ? config.labelCol : {}}
       wrapperCol={config.layout === 'horizontal' ? config.wrapperCol : {}}
-      // name={data.model}
-      // initialValue={data.options.defaultValue}
+      name={data.model}
+      initialValue={data.options.defaultValue}
       hidden={data.options.hidden}
       rules={data.rules}
       {...formProps}
