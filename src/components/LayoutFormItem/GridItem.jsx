@@ -16,7 +16,7 @@ const GridItem = memo((props) => {
         if (setListOfIndex) setListOfIndex(index, cloneDeep(data))
     }
 
-    const setColListOfIndex = (index, data) => {
+    const setChildNestedList = (i, d) => {
         // console.log(index, data)
     }
 
@@ -34,7 +34,7 @@ const GridItem = memo((props) => {
         list.splice(itemIndex, 1)
 
         set(data.columns, `[${colIndex}].list`, list)
-        if (setListOfIndex) setListOfIndex(index, cloneDeep(data))
+        // if (setListOfIndex) setListOfIndex(index, cloneDeep(data))
 
         let nextItem = findValidItem(itemIndex, list)
         if (nextItem) {
@@ -69,6 +69,7 @@ const GridItem = memo((props) => {
                                     selectItem={selectItem}
                                     config={config}
                                     hideModel={hideModel}
+                                    setListOfIndex={setChildNestedList}
                                     handleSetSelectItem={handleSetSelectItem}
                                     onDelete={(itemIndex) => onGridDelete(i, itemIndex)}
                                 />)}

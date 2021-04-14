@@ -1,3 +1,5 @@
+
+
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { Form, Input, InputNumber, Select, Slider, Checkbox, Row, Col, Button } from 'antd'
 import { NormalPropertiesWrapper } from './PropCommon'
@@ -45,7 +47,7 @@ const GridProperties = (props) => {
                                 <Col span={18}>
                                     <InputNumber
                                         style={{ width: '100%' }}
-                                        min={0}
+                                        min={2}
                                         value={d.span}
                                         onChange={(value) => onColChange(i, value)}
                                     />

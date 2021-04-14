@@ -2,9 +2,12 @@ import React, { memo, useEffect } from 'react';
 import IconFont from '../Icon'
 import { Form, Button, Switch, Input, Divider, Row, Col } from 'antd'
 import GridItem from './GridItem'
+import CardItem from './CardItem'
 import FormItemDragWrap from './FormItemDragWrap'
+
 export {
-  GridItem
+  GridItem,
+  CardItem,
 }
 
 const FormItemWarpper = (props) => {

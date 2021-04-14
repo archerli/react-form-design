@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, useImperativeHandle, useEffect } from 'react';
 import { Form, Input, Row, Col, Button, Space, Checkbox } from 'antd'
 import { isNil, set } from 'lodash-es'
 import {
@@ -24,26 +24,17 @@ export const NormalPropertiesWrapper = forwardRef((props, ref) => {
     }))
 
 
+    useEffect(() => {
+        form.resetFields()
+    }, [selectItem])
+
+
     const onValuesChange = (changedValues, allValues) => {
         for (let key in changedValues) {
             set(selectItem, key, changedValues[key])
         }
         // console.log(selectItem)
-        setList(list.map(d => {
-            // console.log(d)
-            if (d.key === selectItem.key) return { ...selectItem }
-
-            if (d.columns) {
-                for (let col of d.columns) {
-                    col.list = col.list.map(colItem => {
-                        if (colItem.key === selectItem.key) return { ...selectItem }
-                        return colItem
-                    })
-                }
-            }
-            
-            return d
-        }))
+        setList([...list])
     }
 
     const updateRules = (nextRules) => {
@@ -58,7 +49,7 @@ export const NormalPropertiesWrapper = forwardRef((props, ref) => {
     return <Form
         form={form}
         layout={'vertical'}
-        value={selectItem}
+        initialValues={selectItem}
         onValuesChange={onValuesChange}
     >
         {isNil(selectItem.label) ? null : <Form.Item label={'标签'} name="label">
