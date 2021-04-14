@@ -74,11 +74,11 @@ export const ActionProperties = (props) => {
     const { wrapRef, selectItem } = props
     const { hidden, disabled, clearable } = selectItem.options || {}
     return <Form.Item label="操作属性">
-        <Checkbox defaultValue={hidden} onChange={(ev) => wrapRef.current.triggerFieldChange('options.hidden', ev.target.checked)}>隐藏</Checkbox>
+        <Checkbox checked={hidden} onChange={(ev) => wrapRef.current.triggerFieldChange('options.hidden', ev.target.checked)}>隐藏</Checkbox>
 
-        <Checkbox defaultValue={disabled} onChange={(ev) => wrapRef.current.triggerFieldChange('options.disabled', ev.target.checked)}>禁用</Checkbox>
+        <Checkbox checked={disabled} onChange={(ev) => wrapRef.current.triggerFieldChange('options.disabled', ev.target.checked)}>禁用</Checkbox>
 
-        <Checkbox defaultValue={clearable} onChange={(ev) => wrapRef.current.triggerFieldChange('options.clearable', ev.target.checked)}>可清除</Checkbox>
+        <Checkbox checked={clearable} onChange={(ev) => wrapRef.current.triggerFieldChange('options.clearable', ev.target.checked)}>可清除</Checkbox>
     </Form.Item>
 }
 
@@ -86,10 +86,10 @@ export const ValidateProperties = (props) => {
     const { wrapRef, selectItem } = props
     return <Form.Item label="校验">
         <Checkbox
-            defaultValue={selectItem.rules[0].required}
+            checked={selectItem.rules[0].required}
             onChange={(ev) => wrapRef.current.triggerFieldChange('rules[0].required', ev.target.checked)}>必填</Checkbox>
         <Input
-            defaultValue={selectItem.rules[0].message}
+            value={selectItem.rules[0].message}
             onChange={(ev) => wrapRef.current.triggerFieldChange('rules[0].message', ev.target.value)}
             placeholder="必填校验提示信息"
         />

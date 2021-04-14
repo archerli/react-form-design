@@ -3,11 +3,13 @@ import IconFont from '../Icon'
 import { Form, Button, Switch, Input, Divider, Row, Col } from 'antd'
 import GridItem from './GridItem'
 import CardItem from './CardItem'
+import TabsItem from './TabsItem'
 import FormItemDragWrap from './FormItemDragWrap'
 
 export {
   GridItem,
   CardItem,
+  TabsItem,
 }
 
 const FormItemWarpper = (props) => {
