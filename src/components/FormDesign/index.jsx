@@ -62,11 +62,11 @@ const FormDesign = forwardRef((props, ref) => {
   }, [layoutList])
 
   const setList = (res) => {
-    console.log('setList', res)
+    formConfig.list = cloneDeep(res)
+    setFormConfig({ ...formConfig })
+    // console.log('setList', res)
     // 新增 与 删除都会执行，新增完了事件对象置空
     if (!isNil(addEventRef.current)) {
-      formConfig.list = cloneDeep(res)
-      setFormConfig({ ...formConfig })
       let record = formConfig.list[get(addEventRef, 'current.newIndex')]
       if (record) {
         delete record.icon;
@@ -74,9 +74,6 @@ const FormDesign = forwardRef((props, ref) => {
         handleSetSelectItem(record)
       }
       addEventRef.current = null
-    } else {
-      formConfig.list = res
-      setFormConfig({ ...formConfig })
     }
   }
 

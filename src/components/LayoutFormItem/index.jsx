@@ -17,7 +17,13 @@ const FormItemWarpper = (props) => {
 
   useEffect(() => {
     form.resetFields([data.model])
-  }, [data.options.defaultValue, data.options.minRows])
+  }, [data.options.minRows])
+
+  useEffect(() => {
+    if (/^input$|^textarea$/g.test(data.type)) {
+      form.setFieldsValue({ [data.model]: data.options.defaultValue })
+    }
+  }, [data.options.defaultValue])
 
   return <FormItemDragWrap {...props}>
     <Form.Item
@@ -25,7 +31,7 @@ const FormItemWarpper = (props) => {
       labelCol={config.layout === 'horizontal' ? config.labelCol : {}}
       wrapperCol={config.layout === 'horizontal' ? config.wrapperCol : {}}
       name={data.model}
-      initialValue={data.options.defaultValue}
+      // initialValue={data.options.defaultValue}
       hidden={data.options.hidden}
       rules={data.rules}
       {...formProps}
