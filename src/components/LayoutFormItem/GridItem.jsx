@@ -12,23 +12,8 @@ const GridItem = memo((props) => {
     const addEventRef = useRef()
 
     const setGridList = (d, i, list) => {
-        // 新增 与 删除都会执行，新增完了事件对象置空
-        if (addEventRef.current) {
-            data.columns[i].list = cloneDeep(list)
-            setListOfIndex(index, data)
-
-            let record = data.columns[i].list[addEventRef.current.newIndex]
-            // 从容器中移出元素时，也会执行，此时 item 值为 undfined
-            if (record) {
-                delete record.icon;
-                delete record.component;
-                handleSetSelectItem(record)
-            }
-            addEventRef.current = null
-        } else {
-            data.columns[i].list = list
-            setListOfIndex(index, data)
-        }
+        data.columns[i].list = list
+        setListOfIndex(index, data)
     }
 
     const setChildNestedList = (i, d) => {
@@ -43,8 +28,17 @@ const GridItem = memo((props) => {
         // console.log(index, data)
     }
 
-    const onAdd = (evt) => {
-        addEventRef.current = evt
+    const onAdd = (i, evt) => {
+        setTimeout(() => {
+            let record = data.columns[i].list[evt.newIndex]
+            // 从容器中移出元素时，也会执行，此时 item 值为 undfined
+            if (record) {
+                delete record.icon;
+                delete record.component;
+                set(data, `columns[${i}].list[${evt.newIndex}]`, record)
+                handleSetSelectItem(record)
+            }
+        }, 0)
     }
 
     const onDragStart = (i, evt) => {
@@ -85,7 +79,7 @@ const GridItem = memo((props) => {
                                 animation={180}
                                 ghostClass={'moving'}
                                 handle={'.drag-move'}
-                                onAdd={onAdd}
+                                onAdd={(evt) => onAdd(i, evt)}
                                 onStart={(evt) => onDragStart(i, evt)}
                             >
                                 {d.list.map((item, j) => <LayoutItem

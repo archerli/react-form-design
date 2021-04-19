@@ -104,10 +104,10 @@ const FormDesign = forwardRef((props, ref) => {
   const onAdd = (evt) => {
     setTimeout(() => {
       let record = cloneDeep(formConfig.list[evt.newIndex])
-      set(formConfig, `list[${evt.newIndex}]`, record)
       if (record) {
         delete record.icon;
         delete record.component;
+        set(formConfig, `list[${evt.newIndex}]`, record)
         handleSetSelectItem(record)
       }
     }, 0)
