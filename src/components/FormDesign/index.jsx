@@ -13,7 +13,7 @@ import OperatingArea from './module/OperatingArea'
 import FormProperties from './module/FormProperties'
 import hyperid from 'hyperid'
 import ItemProperties from './module/ItemProperties';
-import { cloneDeep, isNil } from 'lodash';
+import { cloneDeep, isNil, set } from 'lodash';
 import { get } from 'lodash-es';
 
 const { Panel } = Collapse;
@@ -62,19 +62,8 @@ const FormDesign = forwardRef((props, ref) => {
   }, [layoutList])
 
   const setList = (res) => {
-    formConfig.list = cloneDeep(res)
+    formConfig.list = res
     setFormConfig({ ...formConfig })
-    // console.log('setList', res)
-    // 新增 与 删除都会执行，新增完了事件对象置空
-    if (!isNil(addEventRef.current)) {
-      let record = formConfig.list[get(addEventRef, 'current.newIndex')]
-      if (record) {
-        delete record.icon;
-        delete record.component;
-        handleSetSelectItem(record)
-      }
-      addEventRef.current = null
-    }
   }
 
   const setListOfIndex = (index, d) => {
@@ -113,7 +102,15 @@ const FormDesign = forwardRef((props, ref) => {
   }
 
   const onAdd = (evt) => {
-    addEventRef.current = evt
+    setTimeout(() => {
+      let record = cloneDeep(formConfig.list[evt.newIndex])
+      set(formConfig, `list[${evt.newIndex}]`, record)
+      if (record) {
+        delete record.icon;
+        delete record.component;
+        handleSetSelectItem(record)
+      }
+    }, 0)
   }
 
   const onItemPropertiesHide = useCallback(() => setShowPropertie(false), [])
