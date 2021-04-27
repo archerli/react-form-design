@@ -4,12 +4,14 @@ import { Form, Button, Switch, Input, Divider, Row, Col } from 'antd'
 import GridItem from './GridItem'
 import CardItem from './CardItem'
 import TabsItem from './TabsItem'
+import TableItem from './TableItem'
 import FormItemDragWrap from './FormItemDragWrap'
 
 export {
   GridItem,
   CardItem,
   TabsItem,
+  TableItem,
 }
 
 const FormItemWarpper = (props) => {

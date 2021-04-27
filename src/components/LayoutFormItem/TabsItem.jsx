@@ -122,7 +122,7 @@ function TabsItem(props) {
           })
         }
       </Tabs>
-      <ActionGroup active={active} onDelete={onDelete} />
+      <ActionGroup active={active} {...props} />
     </div>
   );
 }

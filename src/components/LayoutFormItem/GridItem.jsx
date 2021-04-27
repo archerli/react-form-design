@@ -7,9 +7,8 @@ import { cloneDeep, get, set } from 'lodash';
 import { findValidItem } from '../../utils'
 
 const GridItem = memo((props) => {
-    const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex, onColAd } = props
+    const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex } = props
     const active = data.key && data.key === selectItem.key
-    const addEventRef = useRef()
 
     const setGridList = (d, i, list) => {
         data.columns[i].list = list
@@ -101,7 +100,7 @@ const GridItem = memo((props) => {
             })}
         </Row>
 
-        <ActionGroup active={active} onDelete={onDelete} />
+        <ActionGroup active={active} {...props} />
     </div>
 })
 

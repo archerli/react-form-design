@@ -95,7 +95,7 @@ function CardItem(props) {
                     </div>
                 </div>
             </Card>
-            <ActionGroup active={active} onDelete={onDelete} />
+            <ActionGroup active={active} {...props} />
         </div>
     )
 }

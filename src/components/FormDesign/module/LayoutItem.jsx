@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { InputItem, TextAreaItem, TextItem, ButtonItem, SwitchItem, HTMLItem, DividerItem, GridItem, CardItem, TabsItem } from '../../LayoutFormItem'
+import { InputItem, TextAreaItem, TextItem, ButtonItem, SwitchItem, HTMLItem, DividerItem, GridItem, CardItem, TabsItem, TableItem } from '../../LayoutFormItem'
 
 function LayoutItem(props) {
     const { index, selectItem, handleSetSelectItem, onDelete, hideModel, data = {} } = props
@@ -15,6 +15,7 @@ function LayoutItem(props) {
         'grid': GridItem,
         'card': CardItem,
         'tabs': TabsItem,
+        'table': TableItem,
     }[data.type]
 
     const active = data.key && data.key === selectItem.key
