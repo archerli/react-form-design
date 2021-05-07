@@ -16,9 +16,11 @@ export const ActionGroup = (props) => {
     </>
 }
 
-function FormItemDragWrap (props) {
-    const { hideModel, onSelect, onDelete, active, data = {} } = props
-
+function FormItemDragWrap(props) {
+    const { hideModel, onSelect, onDelete, active, isEdit = true, data = {} } = props
+    // 预览 
+    if (!isEdit) return props.children
+    
     return (
         <div
             className={`drag-move-box ${active ? 'active' : ''}`}

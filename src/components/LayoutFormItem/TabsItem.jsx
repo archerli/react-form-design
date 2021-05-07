@@ -9,9 +9,9 @@ import { findValidItem } from '../../utils'
 const { TabPane } = Tabs;
 
 function TabsItem(props) {
-  const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex, onColAd } = props
+  const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex, isEdit = true, onColAd } = props
   const { tabBarGutter, type, size, tabPosition, animated } = data.options || {}
-  const active = data.key && data.key === selectItem.key
+  const active = data.key && data.key === (selectItem && selectItem.key)
   const addEventRef = useRef()
 
   const setNestedList = (d, i, list) => {
@@ -89,17 +89,13 @@ function TabsItem(props) {
             return <TabPane tab={d.label} key={i}>
               <div className="grid-col">
                 <div className="draggable-box">
-                  <ReactSortable
-                    tag="div"
-                    className="list-main"
-                    list={d.list}
-                    setList={(list) => setNestedList(d, i, list)}
-                    group={{ name: 'form-draggable' }}
-                    animation={180}
-                    ghostClass={'moving'}
-                    handle={'.drag-move'}
-                    onStart={(evt) => onDragStart(i, evt)}
+                  <SortWrap
+                    data={d}
+                    index={i}
+                    setNestedList={setNestedList}
+                    onDragStart={onDragStart}
                     onAdd={onAdd}
+                    isEdit={isEdit}
                   >
                     {
                       d.list.map((item, j) => <LayoutItem
@@ -113,18 +109,40 @@ function TabsItem(props) {
                         setListOfIndex={setChildListOfIndex}
                         handleSetSelectItem={handleSetSelectItem}
                         onDelete={(itemIndex) => onNestedDelete(i, itemIndex)}
+                        isEdit={isEdit}
                       />)
                     }
-                  </ReactSortable>
+                  </SortWrap>
                 </div>
               </div>
             </TabPane>
           })
         }
       </Tabs>
-      <ActionGroup active={active} {...props} />
+      {!isEdit ? null : <ActionGroup active={active} {...props} />}
     </div>
   );
+}
+
+const SortWrap = (props) => {
+  const { data, index, setNestedList, onDragStart, onAdd, isEdit = true } = props
+
+  if (!isEdit) return props.children
+
+  return <ReactSortable
+    tag="div"
+    className="list-main"
+    list={data.list}
+    setList={(list) => setNestedList(data, index, list)}
+    group={{ name: 'form-draggable' }}
+    animation={180}
+    ghostClass={'moving'}
+    handle={'.drag-move'}
+    onStart={(evt) => onDragStart(index, evt)}
+    onAdd={onAdd}
+  >
+    {props.children}
+  </ReactSortable>
 }
 
 export default TabsItem;

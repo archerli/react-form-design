@@ -15,6 +15,7 @@ import hyperid from 'hyperid'
 import ItemProperties from './module/ItemProperties';
 import { cloneDeep, isNil, set } from 'lodash';
 import { PreviewJsonModal } from '../Actions/PreviewJson'
+import { PrevieFormModal } from '../Actions/PreviewForm'
 
 const { Panel } = Collapse;
 
@@ -49,6 +50,8 @@ const FormDesign = forwardRef((props, ref) => {
   const [selectItem, setSelectItem] = useState({ key: '' })
   const [startType, setStartType] = useState("")
   const [hideModel, setHideModel] = useState(false)
+
+  const previewFormRef = useRef()
   const previewJsonRef = useRef()
 
   useEffect(() => {
@@ -118,6 +121,10 @@ const FormDesign = forwardRef((props, ref) => {
     previewJsonRef.current.open(formConfig)
   }
 
+  const onPreview = () => {
+    previewFormRef.current.open(formConfig)
+  }
+
   const onItemPropertiesHide = useCallback(() => setShowPropertie(false), [])
 
   return (
@@ -148,6 +155,7 @@ const FormDesign = forwardRef((props, ref) => {
         <section className="main">
           <OperatingArea
             onGetJson={onGetJson}
+            onPreview={onPreview}
           />
           <FormComponentPanel
             data={formConfig}
@@ -158,6 +166,7 @@ const FormDesign = forwardRef((props, ref) => {
             onAdd={onAdd}
             setListOfIndex={setListOfIndex}
           />
+          <PrevieFormModal ref={previewFormRef} />
           <PreviewJsonModal ref={previewJsonRef} />
         </section>
 

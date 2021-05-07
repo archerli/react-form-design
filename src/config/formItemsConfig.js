@@ -521,6 +521,7 @@ export const basicsList = [
     type: "html",
     label: "HTML",
     icon: "icon-ai-code",
+    hideModel: true,
     options: {
       hidden: false, // 是否隐藏，false显示，true隐藏
       defaultValue: "<strong>HTML</strong>"

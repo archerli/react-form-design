@@ -1,7 +1,7 @@
 
 
 import React, { useRef } from 'react';
-import { Form, Input, InputNumber, Row, Col, Button } from 'antd'
+import { Form, Input, InputNumber, Row, Col, Button, Radio, Select, Checkbox } from 'antd'
 import { NormalPropertiesWrapper } from './PropCommon'
 import {
     DeleteOutlined
@@ -10,7 +10,7 @@ import './index.less'
 
 const GridProperties = (props) => {
     const { selectItem } = props
-    const { gutter } = selectItem.options || {}
+    const { gutter, tabPosition, type, size, animated } = selectItem.options || {}
     const wrapRef = useRef()
 
     const onAddCol = () => {
@@ -77,6 +77,43 @@ const GridProperties = (props) => {
                 })}
                 <a onClick={onAddCol}>添加</a>
             </div>
+        </Form.Item>
+
+        <Form.Item label="页签位置" name="options.tabPosition" initialValue={tabPosition} >
+            <Select options={[
+                { label: 'top', value: 'top' },
+                { label: 'right', value: 'right' },
+                { label: 'bottom', value: 'bottom' },
+                { label: 'left', value: 'left' },
+            ]}
+            />
+        </Form.Item>
+
+        <Form.Item label="页签位置" name="options.type" initialValue={type} >
+            <Select options={[
+                { label: 'line', value: 'line' },
+                { label: 'card', value: 'card' },
+                { label: 'editable-card', value: 'editable-card' },
+            ]}
+            />
+        </Form.Item>
+
+        <Form.Item label="大小" name="options.size" initialValue={size} >
+            <Select options={[
+                { label: 'large', value: 'large' },
+                { label: 'default', value: 'default' },
+                { label: 'small', value: 'small' },
+            ]}
+            />
+        </Form.Item>
+
+        <Form.Item
+            label="操作属性"
+            name="options.animated"
+            valuePropName="checked"
+            initialValue={animated}
+        >
+            <Checkbox >动画切换</Checkbox>
         </Form.Item>
     </NormalPropertiesWrapper>
 }

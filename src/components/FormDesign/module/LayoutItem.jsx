@@ -18,7 +18,7 @@ function LayoutItem(props) {
         'table': TableItem,
     }[data.type]
 
-    const active = data.key && data.key === selectItem.key
+    const active = data.key && data.key === (selectItem && selectItem.key)
 
     const onSelect = (e) => {
         e.stopPropagation()
