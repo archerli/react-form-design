@@ -1,5 +1,5 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import { Form, Input, Select, Slider, Checkbox } from 'antd'
+import React, { useRef } from 'react';
+import { Form, Input, Slider } from 'antd'
 import { FormPropertiesWrapper, ActionProperties, ValidateProperties } from './PropCommon'
 import { replaceNum, replaceLimit } from '../../utils'
 

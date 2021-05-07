@@ -14,7 +14,7 @@ import FormProperties from './module/FormProperties'
 import hyperid from 'hyperid'
 import ItemProperties from './module/ItemProperties';
 import { cloneDeep, isNil, set } from 'lodash';
-import { get } from 'lodash-es';
+import { PreviewJsonModal } from '../Actions/PreviewJson'
 
 const { Panel } = Collapse;
 
@@ -49,7 +49,7 @@ const FormDesign = forwardRef((props, ref) => {
   const [selectItem, setSelectItem] = useState({ key: '' })
   const [startType, setStartType] = useState("")
   const [hideModel, setHideModel] = useState(false)
-  const addEventRef = useRef()
+  const previewJsonRef = useRef()
 
   useEffect(() => {
     // 计算需要显示的基础字段
@@ -113,6 +113,11 @@ const FormDesign = forwardRef((props, ref) => {
     }, 0)
   }
 
+  // 顶部操作栏
+  const onGetJson = () => {
+    previewJsonRef.current.open(formConfig)
+  }
+
   const onItemPropertiesHide = useCallback(() => setShowPropertie(false), [])
 
   return (
@@ -141,7 +146,9 @@ const FormDesign = forwardRef((props, ref) => {
 
         </aside>
         <section className="main">
-          <OperatingArea />
+          <OperatingArea
+            onGetJson={onGetJson}
+          />
           <FormComponentPanel
             data={formConfig}
             setList={setList}
@@ -151,6 +158,7 @@ const FormDesign = forwardRef((props, ref) => {
             onAdd={onAdd}
             setListOfIndex={setListOfIndex}
           />
+          <PreviewJsonModal ref={previewJsonRef} />
         </section>
 
         <aside className="right">

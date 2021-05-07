@@ -1,24 +1,25 @@
 
 
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import { Form, Input, InputNumber, Select, Slider, Checkbox, Row, Col, Button } from 'antd'
+import React, { useRef } from 'react';
+import { Form, Input, InputNumber, Row, Col, Button } from 'antd'
 import { NormalPropertiesWrapper } from './PropCommon'
-import { cloneDeep } from 'lodash-es'
 import {
     DeleteOutlined
 } from '@ant-design/icons';
 import './index.less'
 
-const TabsProperties = (props) => {
+const GridProperties = (props) => {
     const { selectItem } = props
     const { gutter } = selectItem.options || {}
     const wrapRef = useRef()
 
     const onAddCol = () => {
         let columns = [...selectItem.columns]
-        let column = cloneDeep(columns.slice(-1)[0] || {
-            span: 12
-        })
+        let column = {
+            value: columns.length + 1,
+            label: '选项' + (columns.length + 1),
+            list: []
+        }
         column.list = []
         columns.push(column)
         wrapRef.current.triggerFieldChange(`columns`, columns)
@@ -30,12 +31,12 @@ const TabsProperties = (props) => {
         wrapRef.current.triggerFieldChange(`columns`, columns)
     }
 
-    const onColChange = (i, value) => {
-        wrapRef.current.triggerFieldChange(`columns[${i}].span`, value)
+    const onColChange = (i, value, key) => {
+        wrapRef.current.triggerFieldChange(`columns[${i}][${key}]`, value)
     }
 
     return <NormalPropertiesWrapper ref={wrapRef} {...props} >
-        <Form.Item label="栅格间距" name="options.gutter" initialValue={gutter} >
+        <Form.Item label="标签间距" name="options.tabBarGutter" initialValue={gutter} >
             <InputNumber style={{ width: '100%' }} min={0} />
         </Form.Item>
         <Form.Item label="列配置项" >
@@ -44,12 +45,22 @@ const TabsProperties = (props) => {
                     return <div key={`grid_col_${i}`} style={{ marginBottom: 10 }}>
                         <div className="option-change-box">
                             <Row gutter={8} align="middle">
-                                <Col span={18}>
-                                    <InputNumber
+                                <Col span={9}>
+                                    <Input
                                         style={{ width: '100%' }}
                                         min={2}
-                                        value={d.span}
-                                        onChange={(value) => onColChange(i, value)}
+                                        value={d.label}
+                                        placeholder="名称"
+                                        onChange={(value) => onColChange(i, value, 'label')}
+                                    />
+                                </Col>
+                                <Col span={9}>
+                                    <Input
+                                        style={{ width: '100%' }}
+                                        min={2}
+                                        value={d.value}
+                                        placeholder="值"
+                                        onChange={(value) => onColChange(i, value, 'value')}
                                     />
                                 </Col>
                                 <Col span={6} style={{ display: 'flex', justifyContent: 'center' }}>
@@ -70,4 +81,4 @@ const TabsProperties = (props) => {
     </NormalPropertiesWrapper>
 }
 
-export default TabsProperties;
+export default GridProperties;

@@ -52,9 +52,10 @@
     align-content: center;
     box-shadow: 0 0 8px rgba(0, 0, 0, 20%);
 
-    a {
+    .opt-btn {
       color: #666;
       margin: 0 8px;
+      cursor: pointer;
 
       &:hover {
         color: @primary-color;
@@ -762,7 +763,7 @@
   // 防止报错信息占位
   .ant-form-item-control {
     position: relative;
-    
+
     .ant-form-explain {
       bottom: -16px;
       position: absolute;
@@ -835,6 +836,7 @@
     padding: 5px;
     display: flex;
     align-self: center;
+
     >label {
       text-align: right;
       padding-right: 8px;
@@ -842,15 +844,16 @@
       align-items: center;
       justify-content: flex-end;
       font-size: 16px;
-      
+
       width: 45px;
     }
   }
 }
 
-.layout-item-temp {
-  .layout-item-temp-label {
-    display: inline-block;
-    margin-left: 4px;
+.json-code-mirror {
+  height: 100%;
+
+  .CodeMirror {
+    height: 100%;
   }
 }
