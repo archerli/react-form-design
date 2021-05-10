@@ -58,11 +58,11 @@ export const basicsList = [
     label: "数字输入框", // 标题文字
     icon: "icon-number",
     options: {
-      width: "100%", // 宽度
+      width: 100, // 宽度
       defaultValue: 0, // 默认值
       min: null, // 可输入最小值
       max: null, // 可输入最大值
-      precision: null,
+      // precision: null,
       step: 1, // 步长，点击加减按钮时候，加减多少
       hidden: false, // 是否隐藏，false显示，true隐藏
       disabled: false, //是否禁用
@@ -82,7 +82,7 @@ export const basicsList = [
     label: "下拉选择器", // 标题文字
     icon: "icon-xiala",
     options: {
-      width: "100%", // 宽度
+      width: 100, // 宽度
       defaultValue: undefined, // 下拉选框请使用undefined为默认值
       multiple: false, // 是否允许多选
       disabled: false, // 是否禁用
@@ -186,7 +186,7 @@ export const basicsList = [
     label: "日期选择框", // 标题文字
     icon: "icon-calendar",
     options: {
-      width: "100%", // 宽度
+      width: 100, // 宽度
       defaultValue: "", // 默认值，字符串 12:00:00
       rangeDefaultValue: [], // 默认值，字符串 12:00:00
       range: false, // 范围日期选择，为true则会显示两个时间选择框（同时defaultValue和placeholder要改成数组），
@@ -212,7 +212,7 @@ export const basicsList = [
     label: "时间选择框", // 标题文字
     icon: "icon-time",
     options: {
-      width: "100%", // 宽度
+      width: 100, // 宽度
       defaultValue: "", // 默认值，字符串 12:00:00
       disabled: false, // 是否禁用
       hidden: false, // 是否隐藏，false显示，true隐藏
@@ -483,6 +483,7 @@ export const basicsList = [
     type: "button", // 表单类型
     label: "按钮", // 标题文字
     icon: "icon-button-remove",
+    hideModel: true,
     options: {
       type: "primary",
       handle: "submit",
@@ -496,6 +497,7 @@ export const basicsList = [
     type: "alert",
     label: "警告提示",
     icon: "icon-zu",
+    hideModel: true,
     options: {
       type: "success",
       description: "",
@@ -510,6 +512,7 @@ export const basicsList = [
     type: "text",
     label: "文字",
     icon: "icon-zihao",
+    hideModel: true,
     options: {
       textAlign: "left",
       hidden: false, // 是否隐藏，false显示，true隐藏

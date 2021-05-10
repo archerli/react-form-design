@@ -89,14 +89,17 @@ export const FormPropertiesWrapper = forwardRef((props, ref) => {
 })
 
 export const ActionProperties = (props) => {
-    const { wrapRef, selectItem } = props
+    const { wrapRef, selectItem, attrs = ['hidden', 'disabled', 'clearable'] } = props
     const { hidden, disabled, clearable } = selectItem.options || {}
+
+    const showItem = (d) => attrs.find(key => key === d)
+
     return <Form.Item label="操作属性">
-        <Checkbox checked={hidden} onChange={(ev) => wrapRef.current.triggerFieldChange('options.hidden', ev.target.checked)}>隐藏</Checkbox>
+        {showItem('hidden') ? <Checkbox checked={hidden} onChange={(ev) => wrapRef.current.triggerFieldChange('options.hidden', ev.target.checked)}>隐藏</Checkbox> : null}
 
-        <Checkbox checked={disabled} onChange={(ev) => wrapRef.current.triggerFieldChange('options.disabled', ev.target.checked)}>禁用</Checkbox>
+        {showItem('disabled') ? <Checkbox checked={disabled} onChange={(ev) => wrapRef.current.triggerFieldChange('options.disabled', ev.target.checked)}>禁用</Checkbox> : null}
 
-        <Checkbox checked={clearable} onChange={(ev) => wrapRef.current.triggerFieldChange('options.clearable', ev.target.checked)}>可清除</Checkbox>
+        {showItem('clearable') ? <Checkbox checked={clearable} onChange={(ev) => wrapRef.current.triggerFieldChange('options.clearable', ev.target.checked)}>可清除</Checkbox> : null}
     </Form.Item>
 }
 

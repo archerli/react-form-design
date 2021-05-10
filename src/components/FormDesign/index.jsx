@@ -75,6 +75,7 @@ const FormDesign = forwardRef((props, ref) => {
   }
 
   const handleSetSelectItem = (record) => {
+    // console.log('handleSetSelectItem', record)
     // 操作间隔不能低于100毫秒
     let newTime = new Date().getTime();
     if (newTime - updateTime < 100) {

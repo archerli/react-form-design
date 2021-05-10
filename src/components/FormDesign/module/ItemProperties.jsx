@@ -1,12 +1,13 @@
 import React from 'react'
 import { DoubleRightOutlined } from '@ant-design/icons'
-import { InputProperties, TextAreaProperties, DividerProperties, GridProperties, CardProperties, TabsProperties } from '../../LayoutProperties'
+import { InputProperties, InputNumberProperties, TextAreaProperties, DividerProperties, GridProperties, CardProperties, TabsProperties } from '../../LayoutProperties'
 
 function ItemProperties(props) {
     const { cls, selectItem, list, setList, onHide, handleSetSelectItem } = props
 
     const Component = {
         'input': InputProperties,
+        'number': InputNumberProperties,
         'textarea': TextAreaProperties,
         'divider': DividerProperties,
         'grid': GridProperties,

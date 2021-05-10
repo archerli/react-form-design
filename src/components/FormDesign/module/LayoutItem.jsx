@@ -1,12 +1,41 @@
 import React, { memo, useEffect } from 'react';
-import { InputItem, TextAreaItem, TextItem, ButtonItem, SwitchItem, HTMLItem, DividerItem, GridItem, CardItem, TabsItem, TableItem } from '../../LayoutFormItem'
+import {
+    InputItem,
+    InputNumberItem,
+    TextAreaItem,
+    TextItem,
+    ButtonItem,
+    SwitchItem,
+    HTMLItem,
+    DividerItem,
+    GridItem,
+    CardItem,
+    TabsItem,
+    TableItem,
+    SelectItem,
+    CheckboxGroupItem,
+    RadioGroupItem,
+    DatePickerItem,
+    TimePickerItem,
+    RateItem,
+    SliderItem,
+} from '../../LayoutFormItem'
 
 function LayoutItem(props) {
     const { index, selectItem, handleSetSelectItem, onDelete, hideModel, data = {} } = props
 
     const Component = {
         'input': InputItem,
+        'number': InputNumberItem,
         'textarea': TextAreaItem,
+        'select': SelectItem,
+        'checkbox': CheckboxGroupItem,
+        'radio': RadioGroupItem,
+        'date': DatePickerItem,
+        'time': TimePickerItem,
+        'rate': RateItem,
+        'slider': SliderItem,
+
         'text': TextItem,
         'button': ButtonItem,
         'switch': SwitchItem,
