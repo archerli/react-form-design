@@ -6,6 +6,7 @@ import CheckboxProperties from './PropCheckbox'
 import RadioProperties from './PropRadio'
 import DatePickerProperties from './PropDatePicker'
 import TimePickerProperties from './PropTimePicker'
+import RateProperties from './PropRate'
 import DividerProperties from './PropDivider'
 import GridProperties from './PropGrid'
 import CardProperties from './PropCard'
@@ -20,6 +21,7 @@ export {
     RadioProperties,
     DatePickerProperties,
     TimePickerProperties,
+    RateProperties,
     DividerProperties,
     GridProperties,
     CardProperties,

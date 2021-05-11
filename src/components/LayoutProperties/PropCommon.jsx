@@ -108,6 +108,10 @@ export const ActionProperties = (props) => {
         {showItem('range') ? <Checkbox checked={range} onChange={(ev) => wrapRef.current.triggerFieldChange('options.range', ev.target.checked)}>范围选择</Checkbox> : null}
         
         {showItem('showTime') ? <Checkbox checked={showTime} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showTime', ev.target.checked)}>时间选择器</Checkbox> : null}
+        
+        {showItem('allowHalf') ? <Checkbox checked={allowHalf} onChange={(ev) => wrapRef.current.triggerFieldChange('options.allowHalf', ev.target.checked)}>允许半选</Checkbox> : null}
+        
+        {showItem('showInput') ? <Checkbox checked={showInput} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showInput', ev.target.checked)}>显示输入框</Checkbox> : null}
     </Form.Item>
 }
 

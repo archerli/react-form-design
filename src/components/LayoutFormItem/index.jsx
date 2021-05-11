@@ -27,7 +27,7 @@ const FormItemWarpper = (props) => {
   }, [data.options.minRows])
 
   useEffect(() => {
-    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$/g.test(data.type)) {
+    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$|^rate$/g.test(data.type)) {
       form.setFieldsValue({ [data.model]: data.options.defaultValue })
     }
   }, [data.options.defaultValue])
