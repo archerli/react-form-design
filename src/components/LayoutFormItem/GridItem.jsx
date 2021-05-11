@@ -7,10 +7,10 @@ import { cloneDeep, get, set } from 'lodash';
 import { findValidItem } from '../../utils'
 
 const GridItem = memo((props) => {
-    const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex } = props
-    const active = data.key && data.key === selectItem.key
+    const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex, isEdit = true } = props
+    const active = data.key && data.key === (selectItem && selectItem.key)
 
-    const setGridList = (d, i, list) => {
+    const setNestedList = (d, i, list) => {
         data.columns[i].list = list
         setListOfIndex(index, data)
     }
@@ -69,17 +69,13 @@ const GridItem = memo((props) => {
                 return <Col className="grid-col" key={`grid_col_${i}`} span={d.span || 0}>
                     <Col className="grid-col" span={24}>
                         <div className="draggable-box">
-                            <ReactSortable
-                                tag="div"
-                                className="list-main"
-                                list={d.list}
-                                setList={(list) => setGridList(d, i, list)}
-                                group={{ name: 'form-draggable' }}
-                                animation={180}
-                                ghostClass={'moving'}
-                                handle={'.drag-move'}
-                                onAdd={(evt) => onAdd(i, evt)}
-                                onStart={(evt) => onDragStart(i, evt)}
+                            <SortWrap
+                                data={d}
+                                index={i}
+                                setNestedList={setNestedList}
+                                onDragStart={onDragStart}
+                                onAdd={onAdd}
+                                isEdit={isEdit}
                             >
                                 {d.list.map((item, j) => <LayoutItem
                                     key={`${item.key}`}
@@ -92,17 +88,38 @@ const GridItem = memo((props) => {
                                     setListOfIndex={setChildNestedList}
                                     handleSetSelectItem={handleSetSelectItem}
                                     onDelete={(itemIndex) => onGridDelete(i, itemIndex)}
+                                    isEdit={isEdit}
                                 />)}
-                            </ReactSortable>
+                            </SortWrap>
                         </div>
                     </Col>
                 </Col>
             })}
         </Row>
 
-        <ActionGroup active={active} {...props} />
+        {!isEdit ? null : <ActionGroup active={active} {...props} />}
     </div>
 })
 
+const SortWrap = (props) => {
+    const { data, index, setNestedList, onDragStart, onAdd, isEdit = true } = props
+
+    if (!isEdit) return props.children
+
+    return <ReactSortable
+        tag="div"
+        className="list-main"
+        list={data.list}
+        setList={(list) => setNestedList(data, index, list)}
+        group={{ name: 'form-draggable' }}
+        animation={180}
+        ghostClass={'moving'}
+        handle={'.drag-move'}
+        onStart={(evt) => onDragStart(index, evt)}
+        onAdd={(evt) => onAdd(index, evt)}
+    >
+        {props.children}
+    </ReactSortable>
+}
 
 export default GridItem;

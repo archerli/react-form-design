@@ -90,7 +90,7 @@ export const FormPropertiesWrapper = forwardRef((props, ref) => {
 
 export const ActionProperties = (props) => {
     const { wrapRef, selectItem, attrs = ['hidden', 'disabled', 'clearable'] } = props
-    const { hidden, disabled, clearable } = selectItem.options || {}
+    const { hidden, disabled, clearable, multiple, range, showTime, allowHalf, showInput, showSearch } = selectItem.options || {}
 
     const showItem = (d) => attrs.find(key => key === d)
 
@@ -100,6 +100,14 @@ export const ActionProperties = (props) => {
         {showItem('disabled') ? <Checkbox checked={disabled} onChange={(ev) => wrapRef.current.triggerFieldChange('options.disabled', ev.target.checked)}>禁用</Checkbox> : null}
 
         {showItem('clearable') ? <Checkbox checked={clearable} onChange={(ev) => wrapRef.current.triggerFieldChange('options.clearable', ev.target.checked)}>可清除</Checkbox> : null}
+
+        {showItem('multiple') ? <Checkbox checked={multiple} onChange={(ev) => wrapRef.current.triggerFieldChange('options.multiple', ev.target.checked)}>多选</Checkbox> : null}
+
+        {showItem('showSearch') ? <Checkbox checked={showSearch} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showSearch', ev.target.checked)}>可搜索</Checkbox> : null}
+        
+        {showItem('range') ? <Checkbox checked={range} onChange={(ev) => wrapRef.current.triggerFieldChange('options.range', ev.target.checked)}>范围选择</Checkbox> : null}
+        
+        {showItem('showTime') ? <Checkbox checked={showTime} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showTime', ev.target.checked)}>时间选择器</Checkbox> : null}
     </Form.Item>
 }
 
@@ -174,5 +182,60 @@ export const CustomRules = (props) => {
         }
 
         <a onClick={onAddRules}>增加校验</a>
+    </div>
+}
+
+export const CustomOptions = (props) => {
+    const { update, onChange, model = { label: '', value: '' }, data = [] } = props
+
+    const onAdd = () => {
+        let item = { ...model }
+        
+        item.value = data.length + 1
+        item.label = `选项${item.value}`
+
+        let nextList = [...data, item]
+        update && update(nextList)
+    }
+
+    const onDelete = (index) => {
+        let nextList = [...data]
+        nextList.splice(index, 1)
+        update && update(nextList)
+    }
+
+    return <div className="option-change-container">
+        {
+            data.map((d, i) => <div key={`rules_${i}`} >
+                <div className="option-change-box">
+                    <Row gutter={8} align="middle" style={{marginBottom: 6}}>
+                        <Col span={9}>
+                            <Input
+                                placeholder="名称"
+                                value={d.label}
+                                onChange={(ev) => onChange(i, 'label', ev.target.value)}
+                            />
+                        </Col>
+                        <Col span={9}>
+                            <Input
+                                placeholder="值"
+                                value={d.value}
+                                onChange={(ev) => onChange(i, 'value', ev.target.value)}
+                            />
+                        </Col>
+                        <Col span={6} style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Button
+                                shape="circle"
+                                danger
+                                icon={<DeleteOutlined style={{ fontSize: 14 }} />}
+                                onClick={() => onDelete(i)}
+                            />
+                        </Col>
+                    </Row>
+                </div>
+            </div>)
+        }
+
+        <a onClick={onAdd}>添加</a>
     </div>
 }

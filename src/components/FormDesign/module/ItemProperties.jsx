@@ -1,6 +1,18 @@
 import React from 'react'
 import { DoubleRightOutlined } from '@ant-design/icons'
-import { InputProperties, InputNumberProperties, TextAreaProperties, DividerProperties, GridProperties, CardProperties, TabsProperties } from '../../LayoutProperties'
+import {
+    InputProperties,
+    InputNumberProperties,
+    TextAreaProperties,
+    SelectProperties,
+    CheckboxProperties,
+    RadioProperties,
+    DatePickerProperties,
+    DividerProperties,
+    GridProperties,
+    CardProperties,
+    TabsProperties,
+} from '../../LayoutProperties'
 
 function ItemProperties(props) {
     const { cls, selectItem, list, setList, onHide, handleSetSelectItem } = props
@@ -9,6 +21,10 @@ function ItemProperties(props) {
         'input': InputProperties,
         'number': InputNumberProperties,
         'textarea': TextAreaProperties,
+        'select': SelectProperties,
+        'checkbox': CheckboxProperties,
+        'radio': RadioProperties,
+        'date': DatePickerProperties,
         'divider': DividerProperties,
         'grid': GridProperties,
         'card': CardProperties,

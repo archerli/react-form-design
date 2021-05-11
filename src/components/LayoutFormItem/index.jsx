@@ -6,7 +6,8 @@ import CardItem from './CardItem'
 import TabsItem from './TabsItem'
 import TableItem from './TableItem'
 import FormItemDragWrap from './FormItemDragWrap'
-import { CodepenOutlined } from '@ant-design/icons';
+import { CodepenOutlined } from '@ant-design/icons'
+import moment from 'moment'
 
 import './index.less'
 export {
@@ -26,7 +27,7 @@ const FormItemWarpper = (props) => {
   }, [data.options.minRows])
 
   useEffect(() => {
-    if (/^input$|^textarea$|^number$/g.test(data.type)) {
+    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$/g.test(data.type)) {
       form.setFieldsValue({ [data.model]: data.options.defaultValue })
     }
   }, [data.options.defaultValue])
@@ -159,21 +160,30 @@ export const RadioGroupItem = memo((props) => {
 /* 日期选择器 */
 export const DatePickerItem = memo((props) => {
   const { data, config, onChange } = props
-  const { defaultValue, placeholder, rangePlaceholder, showTime, clearable, format, disabled, range, width } = data.options || {}
+  const { defaultValue, placeholder, rangePlaceholder, rangeDefaultValue, showTime, clearable, format, disabled, range, width } = data.options || {}
+
+  const dateValue = () => {
+    if (!range && !defaultValue) return
+    if (range && !defaultValue.length) return
+    if (range) return defaultValue.map(d => moment(d, format))
+    return moment(defaultValue, format)
+  }
+
   let PickerComponent = DatePicker
 
   if (range) PickerComponent = RangePicker
-
   return <FormItemWarpper {...props}>
-    <PickerComponent
-      style={{ width: width + '%' }}
-      showTime={showTime}
-      disabled={props.disabled || disabled}
-      allowClear={clearable}
-      format={format}
-      value={defaultValue}
-      placeholder={range ? rangePlaceholder : placeholder}
-    />
+    <div>
+      <PickerComponent
+        style={{ width: width + '%' }}
+        showTime={showTime}
+        disabled={props.disabled || disabled}
+        allowClear={clearable}
+        format={format}
+        value={dateValue()}
+        placeholder={range ? rangePlaceholder : placeholder}
+      />
+    </div>
   </FormItemWarpper>
 })
 
@@ -189,7 +199,7 @@ export const TimePickerItem = memo((props) => {
       disabled={props.disabled || disabled}
       allowClear={clearable}
       format={format}
-      value={defaultValue}
+      // value={defaultValue}
       placeholder={range ? rangePlaceholder : placeholder}
     />
   </FormItemWarpper>
