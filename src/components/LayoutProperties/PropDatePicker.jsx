@@ -4,7 +4,7 @@ import { FormPropertiesWrapper, ActionProperties, ValidateProperties, CustomOpti
 
 const DatePickerProperties = (props) => {
     const { selectItem } = props
-    const { width, placeholder, defaultValue, range, rangeDefaultValue, rangePlaceholder, format } = selectItem.options || {}
+    const { width, placeholder, defaultValue, range, rangePlaceholder, format } = selectItem.options || {}
     const wrapRef = useRef()
 
     const onDateDefaultValueChange = (key, ev) => {
@@ -36,7 +36,7 @@ const DatePickerProperties = (props) => {
             {range ? <Space>
                 <Input placeholder="请输入占位内容" defaultValue={defaultValue[0]} onChange={(ev) => onDateDefaultValueChange('defaultValue[0]', ev)} />
                 <Input placeholder="请输入占位内容" defaultValue={defaultValue[1]} onChange={(ev) => onDateDefaultValueChange('defaultValue[1]', ev)} />
-            </Space> : <Input placeholder="请输入默认值" defaultValue={defaultValue} onChange={(ev)=> onDateDefaultValueChange('defaultValue', ev)} />}
+            </Space> : <Input placeholder="请输入默认值" defaultValue={defaultValue} onChange={(ev) => onDateDefaultValueChange('defaultValue', ev)} />}
         </Form.Item>
 
         <Form.Item label="时间格式" name="options.format" initialValue={format}>
