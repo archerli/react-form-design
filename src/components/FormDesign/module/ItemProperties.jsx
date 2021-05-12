@@ -11,6 +11,9 @@ import {
     TimePickerProperties,
     RateProperties,
     SliderProperties,
+    UploadFileProperties,
+    UploadImageProperties,
+
     DividerProperties,
     GridProperties,
     CardProperties,
@@ -32,6 +35,9 @@ function ItemProperties(props) {
         'divider': DividerProperties,
         'rate': RateProperties,
         'slider': SliderProperties,
+        'uploadFile': UploadFileProperties,
+        'uploadImg': UploadImageProperties,
+
         'grid': GridProperties,
         'card': CardProperties,
         'tabs': TabsProperties,

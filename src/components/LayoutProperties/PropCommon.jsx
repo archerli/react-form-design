@@ -90,7 +90,7 @@ export const FormPropertiesWrapper = forwardRef((props, ref) => {
 
 export const ActionProperties = (props) => {
     const { wrapRef, selectItem, attrs = ['hidden', 'disabled', 'clearable'] } = props
-    const { hidden, disabled, clearable, multiple, range, showTime, allowHalf, showInput, showSearch } = selectItem.options || {}
+    const { hidden, disabled, clearable, multiple, drag, range, showTime, allowHalf, showInput, showSearch } = selectItem.options || {}
 
     const showItem = (d) => attrs.find(key => key === d)
 
@@ -112,6 +112,8 @@ export const ActionProperties = (props) => {
         {showItem('allowHalf') ? <Checkbox checked={allowHalf} onChange={(ev) => wrapRef.current.triggerFieldChange('options.allowHalf', ev.target.checked)}>允许半选</Checkbox> : null}
         
         {showItem('showInput') ? <Checkbox checked={showInput} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showInput', ev.target.checked)}>输入框</Checkbox> : null}
+        
+        {showItem('drag') ? <Checkbox checked={drag} onChange={(ev) => wrapRef.current.triggerFieldChange('options.drag', ev.target.checked)}>拖拽上传</Checkbox> : null}
     </Form.Item>
 }
 

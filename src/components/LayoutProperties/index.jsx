@@ -8,6 +8,9 @@ import DatePickerProperties from './PropDatePicker'
 import TimePickerProperties from './PropTimePicker'
 import RateProperties from './PropRate'
 import SliderProperties from './PropSlider'
+import UploadFileProperties from './PropUploadFile'
+import UploadImageProperties from './PropUploadImage'
+
 import DividerProperties from './PropDivider'
 import GridProperties from './PropGrid'
 import CardProperties from './PropCard'
@@ -24,6 +27,9 @@ export {
     TimePickerProperties,
     RateProperties,
     SliderProperties,
+    UploadFileProperties,
+    UploadImageProperties,
+    
     DividerProperties,
     GridProperties,
     CardProperties,

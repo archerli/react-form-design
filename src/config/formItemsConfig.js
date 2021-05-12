@@ -285,7 +285,7 @@ export const basicsList = [
       drag: false,
       downloadWay: "a",
       dynamicFun: "",
-      width: "100%",
+      width: 100,
       limit: 3,
       data: "{}",
       fileName: "file",

@@ -1,10 +1,11 @@
 import React, { memo, useEffect, useState } from 'react';
 import IconFont from '../Icon'
-import { Form, Button, Switch, Input, InputNumber, Divider, Select, Checkbox, Radio, DatePicker, TimePicker, Rate, Slider } from 'antd'
+import { Form, Button, Switch, Input, InputNumber, Divider, Select, Checkbox, Radio, DatePicker, TimePicker, Rate, Slider, Upload } from 'antd'
 import GridItem from './GridItem'
 import CardItem from './CardItem'
 import TabsItem from './TabsItem'
 import TableItem from './TableItem'
+import { UploadFile, UploadImage } from '../Upload'
 import FormItemDragWrap from './FormItemDragWrap'
 import { CodepenOutlined } from '@ant-design/icons'
 import moment from 'moment'
@@ -18,6 +19,8 @@ export {
 }
 
 const { RangePicker } = DatePicker
+const { Dragger } = Upload
+
 
 const FormItemWarpper = (props) => {
   const { data, config, children, form, showLabel = true, formProps = {} } = props
@@ -268,6 +271,19 @@ export const SliderItem = memo((props) => {
   </FormItemWarpper>
 })
 
+/* 上传文件 */
+export const UploadFileItem = memo((props) => {
+  return <FormItemWarpper {...props}>
+    <UploadFile {...props} />
+  </FormItemWarpper>
+})
+
+/* 上传图片 */
+export const UploadImageItem = memo((props) => {
+  return <FormItemWarpper {...props}>
+    <UploadImage {...props} />
+  </FormItemWarpper>
+})
 
 /* 文字 */
 export const TextItem = memo((props) => {

@@ -19,6 +19,8 @@ import {
     TimePickerItem,
     RateItem,
     SliderItem,
+    UploadFileItem,
+    UploadImageItem,
 } from '../../LayoutFormItem'
 
 function LayoutItem(props) {
@@ -35,7 +37,9 @@ function LayoutItem(props) {
         'time': TimePickerItem,
         'rate': RateItem,
         'slider': SliderItem,
-
+        'uploadFile': UploadFileItem,
+        'uploadImg': UploadImageItem,
+        
         'text': TextItem,
         'button': ButtonItem,
         'switch': SwitchItem,
