@@ -7,6 +7,7 @@ import RadioProperties from './PropRadio'
 import DatePickerProperties from './PropDatePicker'
 import TimePickerProperties from './PropTimePicker'
 import RateProperties from './PropRate'
+import SliderProperties from './PropSlider'
 import DividerProperties from './PropDivider'
 import GridProperties from './PropGrid'
 import CardProperties from './PropCard'
@@ -22,6 +23,7 @@ export {
     DatePickerProperties,
     TimePickerProperties,
     RateProperties,
+    SliderProperties,
     DividerProperties,
     GridProperties,
     CardProperties,

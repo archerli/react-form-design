@@ -27,7 +27,7 @@ const FormItemWarpper = (props) => {
   }, [data.options.minRows])
 
   useEffect(() => {
-    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$|^rate$/g.test(data.type)) {
+    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$|^rate$|^slider$/g.test(data.type)) {
       form.setFieldsValue({ [data.model]: data.options.defaultValue })
     }
   }, [data.options.defaultValue])
@@ -223,11 +223,15 @@ export const RateItem = memo((props) => {
 /* 滑动输入条 */
 export const SliderItem = memo((props) => {
   const { data, config, form } = props
-  const { defaultValue, disabled, min, max, step, allowHalf, showInput, width } = data.options || {}
-  // console.log(data)
+  const { defaultValue, disabled, min, max, step, showInput, width } = data.options || {}
   const val = form.getFieldValue(data.model)
 
   const [value, setValue] = useState(val)
+
+  useEffect(() => {
+    setValue(defaultValue)
+  }, [defaultValue])
+
 
   const onChange = (value) => {
     setValue(value)
@@ -248,7 +252,7 @@ export const SliderItem = memo((props) => {
           defaultValue={defaultValue}
         />
       </div>
-      <div className="number">
+      {showInput ? <div className="number">
         <InputNumber
           style={{ width: '100%' }}
           // onChange={onChange}
@@ -259,7 +263,7 @@ export const SliderItem = memo((props) => {
           value={value}
           defaultValue={defaultValue}
         />
-      </div>
+      </div> : null}
     </div>
   </FormItemWarpper>
 })

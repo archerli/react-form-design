@@ -111,7 +111,7 @@ export const ActionProperties = (props) => {
         
         {showItem('allowHalf') ? <Checkbox checked={allowHalf} onChange={(ev) => wrapRef.current.triggerFieldChange('options.allowHalf', ev.target.checked)}>允许半选</Checkbox> : null}
         
-        {showItem('showInput') ? <Checkbox checked={showInput} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showInput', ev.target.checked)}>显示输入框</Checkbox> : null}
+        {showItem('showInput') ? <Checkbox checked={showInput} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showInput', ev.target.checked)}>输入框</Checkbox> : null}
     </Form.Item>
 }
 

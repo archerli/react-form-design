@@ -254,7 +254,7 @@ export const basicsList = [
     label: "滑动输入条", // 标题文字
     icon: "icon-menu",
     options: {
-      width: "100%", // 宽度
+      width: 100, // 宽度
       defaultValue: 0, // 默认值， 如果range为true的时候，则需要改成数组,如：[12,15]
       disabled: false, // 是否禁用
       hidden: false, // 是否隐藏，false显示，true隐藏
