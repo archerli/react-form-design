@@ -6,6 +6,7 @@ import CardItem from './CardItem'
 import TabsItem from './TabsItem'
 import TableItem from './TableItem'
 import { UploadFile, UploadImage } from '../Upload'
+import RichEditor from '../RichEditor'
 import FormItemDragWrap from './FormItemDragWrap'
 import { CodepenOutlined } from '@ant-design/icons'
 import moment from 'moment'
@@ -324,6 +325,30 @@ export const CasaderItem = memo((props) => {
       options={dynamic ? dynamicData[dynamicKey] || [] : options}
     />
   </FormItemWarpper>
+})
+
+/* 动态表格 */
+
+
+/* 富文本 */
+export const EditorItem = memo((props) => {
+  const { data, config, form, dynamicData = {} } = props
+  const { defaultValue, dynamic, dynamicKey, width } = data.options || {}
+
+  const onEditorChange = () => {
+    
+  }
+
+  return <FormItemDragWrap {...props}>
+    <RichEditor 
+      style={{ width: `${width}%` }}
+      disabled={props.disabled}
+      data={data}
+      dynamicData={dynamicData}
+      defaultValue={defaultValue}
+      onChange={onEditorChange}
+    />
+  </FormItemDragWrap>
 })
 
 

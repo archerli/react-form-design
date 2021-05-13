@@ -23,6 +23,7 @@ import {
     UploadImageItem,
     TreeSelectItem,
     CasaderItem,
+    EditorItem,
 } from '../../LayoutFormItem'
 
 function LayoutItem(props) {
@@ -43,6 +44,7 @@ function LayoutItem(props) {
         'uploadImg': UploadImageItem,
         'treeSelect': TreeSelectItem,
         'cascader': CasaderItem,
+        'editor': EditorItem,
         
         'text': TextItem,
         'button': ButtonItem,
