@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
 import IconFont from '../Icon'
-import { Form, Button, Switch, Input, InputNumber, Divider, Select, Checkbox, Radio, DatePicker, TimePicker, Rate, Slider, Upload } from 'antd'
+import { Form, Button, Switch, Input, InputNumber, Divider, Select, Checkbox, Radio, DatePicker, TimePicker, Rate, Slider, Upload, TreeSelect, Cascader } from 'antd'
 import GridItem from './GridItem'
 import CardItem from './CardItem'
 import TabsItem from './TabsItem'
@@ -284,6 +284,45 @@ export const UploadImageItem = memo((props) => {
     <UploadImage {...props} />
   </FormItemWarpper>
 })
+
+/* 树形选择器 */
+export const TreeSelectItem = memo((props) => {
+  const { data, config, onChange, form, dynamicData = {} } = props
+  const { defaultValue, disabled, placeholder, multiple, showSearch, treeCheckable, options, dynamic, dynamicKey, clearable, width } = data.options || {}
+
+  return <FormItemWarpper {...props}>
+    <TreeSelect
+      style={{ width: `${width}%` }}
+      placeholder={placeholder}
+      multiple={multiple}
+      showSearch={showSearch}
+      treeCheckable={treeCheckable}
+      disabled={disabled}
+      defaultValue={defaultValue}
+      allowClear={clearable}
+      treeData={dynamic ? dynamicData[dynamicKey] || [] : options}
+    />
+  </FormItemWarpper>
+})
+
+/* 级联选择器 */
+export const CasaderItem = memo((props) => {
+  const { data, config, onChange, form, dynamicData = {} } = props
+  const { defaultValue, disabled, placeholder, showSearch, options, dynamic, dynamicKey, clearable, width } = data.options || {}
+
+  return <FormItemWarpper {...props}>
+    <Cascader
+      style={{ width: `${width}%` }}
+      placeholder={placeholder}
+      showSearch={showSearch}
+      disabled={disabled}
+      defaultValue={defaultValue}
+      allowClear={clearable}
+      options={dynamic ? dynamicData[dynamicKey] || [] : options}
+    />
+  </FormItemWarpper>
+})
+
 
 /* 文字 */
 export const TextItem = memo((props) => {

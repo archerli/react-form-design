@@ -2,6 +2,8 @@ import InputProperties from './PropInput'
 import InputNumberProperties from './PropInputNumber'
 import TextAreaProperties from './PropTextArea'
 import SelectProperties from './PropSelect'
+import TreeSelectProperties from './PropTreeSelect'
+import CascaderProperties from './PropCascader'
 import CheckboxProperties from './PropCheckbox'
 import RadioProperties from './PropRadio'
 import DatePickerProperties from './PropDatePicker'
@@ -21,6 +23,8 @@ export {
     InputNumberProperties,
     TextAreaProperties,
     SelectProperties,
+    TreeSelectProperties,
+    CascaderProperties,
     CheckboxProperties,
     RadioProperties,
     DatePickerProperties,

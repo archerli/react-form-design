@@ -21,6 +21,8 @@ import {
     SliderItem,
     UploadFileItem,
     UploadImageItem,
+    TreeSelectItem,
+    CasaderItem,
 } from '../../LayoutFormItem'
 
 function LayoutItem(props) {
@@ -39,6 +41,8 @@ function LayoutItem(props) {
         'slider': SliderItem,
         'uploadFile': UploadFileItem,
         'uploadImg': UploadImageItem,
+        'treeSelect': TreeSelectItem,
+        'cascader': CasaderItem,
         
         'text': TextItem,
         'button': ButtonItem,

@@ -334,6 +334,7 @@ export const basicsList = [
     label: "树选择器", // 标题文字
     icon: "icon-tree",
     options: {
+      width: 100,
       disabled: false, //是否禁用
       defaultValue: undefined, // 默认值
       multiple: false,
@@ -381,6 +382,7 @@ export const basicsList = [
     label: "级联选择器", // 标题文字
     icon: "icon-guanlian",
     options: {
+      width: 100,
       disabled: false, //是否禁用
       hidden: false, // 是否隐藏，false显示，true隐藏
       defaultValue: undefined, // 默认值

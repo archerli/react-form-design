@@ -90,7 +90,7 @@ export const FormPropertiesWrapper = forwardRef((props, ref) => {
 
 export const ActionProperties = (props) => {
     const { wrapRef, selectItem, attrs = ['hidden', 'disabled', 'clearable'] } = props
-    const { hidden, disabled, clearable, multiple, drag, range, showTime, allowHalf, showInput, showSearch } = selectItem.options || {}
+    const { hidden, disabled, clearable, multiple, drag, range, showTime, allowHalf, showInput, showSearch, treeCheckable } = selectItem.options || {}
 
     const showItem = (d) => attrs.find(key => key === d)
 
@@ -104,16 +104,18 @@ export const ActionProperties = (props) => {
         {showItem('multiple') ? <Checkbox checked={multiple} onChange={(ev) => wrapRef.current.triggerFieldChange('options.multiple', ev.target.checked)}>多选</Checkbox> : null}
 
         {showItem('showSearch') ? <Checkbox checked={showSearch} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showSearch', ev.target.checked)}>可搜索</Checkbox> : null}
-        
+
         {showItem('range') ? <Checkbox checked={range} onChange={(ev) => wrapRef.current.triggerFieldChange('options.range', ev.target.checked)}>范围选择</Checkbox> : null}
-        
+
         {showItem('showTime') ? <Checkbox checked={showTime} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showTime', ev.target.checked)}>时间选择器</Checkbox> : null}
-        
+
         {showItem('allowHalf') ? <Checkbox checked={allowHalf} onChange={(ev) => wrapRef.current.triggerFieldChange('options.allowHalf', ev.target.checked)}>允许半选</Checkbox> : null}
-        
+
         {showItem('showInput') ? <Checkbox checked={showInput} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showInput', ev.target.checked)}>输入框</Checkbox> : null}
-        
+
         {showItem('drag') ? <Checkbox checked={drag} onChange={(ev) => wrapRef.current.triggerFieldChange('options.drag', ev.target.checked)}>拖拽上传</Checkbox> : null}
+
+        {showItem('treeCheckable') ? <Checkbox checked={treeCheckable} onChange={(ev) => wrapRef.current.triggerFieldChange('options.treeCheckable', ev.target.checked)}>可勾选</Checkbox> : null}
     </Form.Item>
 }
 
@@ -196,7 +198,7 @@ export const CustomOptions = (props) => {
 
     const onAdd = () => {
         let item = { ...model }
-        
+
         item.value = data.length + 1
         item.label = `选项${item.value}`
 
@@ -214,7 +216,7 @@ export const CustomOptions = (props) => {
         {
             data.map((d, i) => <div key={`rules_${i}`} >
                 <div className="option-change-box">
-                    <Row gutter={8} align="middle" style={{marginBottom: 6}}>
+                    <Row gutter={8} align="middle" style={{ marginBottom: 6 }}>
                         <Col span={9}>
                             <Input
                                 placeholder="名称"
