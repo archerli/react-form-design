@@ -7,9 +7,9 @@ import { cloneDeep, get, set } from 'lodash';
 import { findValidItem } from '../../utils'
 
 const TableItem = memo((props) => {
-  const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex } = props
+  const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex, isEdit = true } = props
   const { bright, small, bordered, customStyle } = data.options
-  const active = data.key && data.key === selectItem.key
+  const active = data.key && data.key === (selectItem && selectItem.key)
 
   const setNestedList = (tri, tdi, list) => {
     data.trs[tri].tds[tdi].list = list
@@ -79,17 +79,14 @@ const TableItem = memo((props) => {
                 rowSpan={td.rowspan}
               >
                 <div className="draggable-box">
-                  <ReactSortable
-                    tag="div"
-                    className="list-main"
-                    list={td.list}
-                    setList={(list) => setNestedList(tri, tdi, list)}
-                    group={{ name: 'form-draggable' }}
-                    animation={180}
-                    ghostClass={'moving'}
-                    handle={'.drag-move'}
-                    onAdd={(evt) => onAdd(tri, tdi, evt)}
-                    onStart={(evt) => onDragStart(tri, tdi, evt)}
+                  <SortWrap
+                    data={td}
+                    tri={tri}
+                    tdi={tdi}
+                    setNestedList={setNestedList}
+                    onDragStart={onDragStart}
+                    onAdd={onAdd}
+                    isEdit={isEdit}
                   >
                     {td.list.map((item, j) => <LayoutItem
                       key={`${item.key}`}
@@ -102,8 +99,9 @@ const TableItem = memo((props) => {
                       setListOfIndex={setChildNestedList}
                       handleSetSelectItem={handleSetSelectItem}
                       onDelete={(itemIndex) => onNestedDelete(tri, tdi, itemIndex)}
+                      isEdit={isEdit}
                     />)}
-                  </ReactSortable>
+                  </SortWrap>
                 </div>
               </td>)
             }
@@ -112,8 +110,30 @@ const TableItem = memo((props) => {
       </tbody>
 
     </table>
-    <ActionGroup active={active} {...props} />
+
+    {!isEdit ? null : <ActionGroup active={active} {...props} />}
   </div>
 })
+
+const SortWrap = (props) => {
+  const { data, tri, tdi, setNestedList, onDragStart, onAdd, isEdit = true } = props
+
+  if (!isEdit) return props.children
+
+  return <ReactSortable
+    tag="div"
+    className="list-main"
+    list={data.list}
+    setList={(list) => setNestedList(tri, tdi, list)}
+    group={{ name: 'form-draggable' }}
+    animation={180}
+    ghostClass={'moving'}
+    handle={'.drag-move'}
+    onAdd={(evt) => onAdd(tri, tdi, evt)}
+    onStart={(evt) => onDragStart(tri, tdi, evt)}
+  >
+    {props.children}
+  </ReactSortable>
+}
 
 export default TableItem;
