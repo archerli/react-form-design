@@ -30,7 +30,7 @@ const FormItemWarpper = (props) => {
   }, [data.options.minRows])
 
   useEffect(() => {
-    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$|^rate$|^slider$/g.test(data.type)) {
+    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$|^rate$|^slider$|^select$/g.test(data.type)) {
       form.setFieldsValue({ [data.model]: data.options.defaultValue })
     }
   }, [data.options.defaultValue])
@@ -117,11 +117,14 @@ export const SelectItem = memo((props) => {
       value={defaultValue}
       placeholder={placeholder}
       options={dynamic ? (dynamicData[dynamicKey] || []) : options}
-      filterOption={showSearch ? (inputValue, option) => (
-        option.componentOptions.children[0].text
-          .toLowerCase()
-          .indexOf(inputValue.toLowerCase()) >= 0
-      ) : false}
+      showSearch={showSearch}
+      filterOption={showSearch ? (inputValue, option) => {
+        return (
+          option.label
+            .toLowerCase()
+            .indexOf(inputValue.toLowerCase()) >= 0
+        )
+      } : false}
       disabled={props.disabled || disabled}
       allowClear={clearable}
       mode={multiple ? 'multiple' : ''}

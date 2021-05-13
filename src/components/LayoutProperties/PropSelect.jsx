@@ -57,7 +57,11 @@ const SelectProperties = (props) => {
         </Form.Item>
 
         <Form.Item label="默认值" name="options.defaultValue" initialValue={defaultValue}>
-            <Input placeholder="请输入默认值" />
+            {dynamic ? <Input placeholder="请输入默认值" /> : <Select
+                placeholder="请选择默认值"
+                options={options}
+                allowClear
+            />}
         </Form.Item>
 
         {/* 操作属性 */}
