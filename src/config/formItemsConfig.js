@@ -452,7 +452,7 @@ export const basicsList = [
       hidden: false, // 是否隐藏，false显示，true隐藏
       disabled: false,
       showLabel: false,
-      width: "100%"
+      width: 100
     },
     model: "",
     key: "",

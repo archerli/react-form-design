@@ -333,22 +333,32 @@ export const CasaderItem = memo((props) => {
 /* 富文本 */
 export const EditorItem = memo((props) => {
   const { data, config, form, dynamicData = {} } = props
-  const { defaultValue, dynamic, dynamicKey, width } = data.options || {}
+  const { defaultValue, dynamic, dynamicKey, width, showLabel } = data.options || {}
 
   const onEditorChange = () => {
-    
+
   }
 
-  return <FormItemDragWrap {...props}>
-    <RichEditor 
-      style={{ width: `${width}%` }}
-      disabled={props.disabled}
-      data={data}
-      dynamicData={dynamicData}
-      defaultValue={defaultValue}
-      onChange={onEditorChange}
-    />
-  </FormItemDragWrap>
+  return <FormItemWarpper {...props} showLabel={showLabel}
+    formProps={
+      {
+        labelCol: config.layout === 'horizontal' && showLabel ? config.labelCol : {},
+        wrapperCol: config.layout === 'horizontal' && showLabel ? config.wrapperCol : {}
+      }
+    }
+  >
+    <div>
+      <RichEditor
+        style={{ width: `${width}%` }}
+        disabled={props.disabled}
+        data={data}
+        dynamicData={dynamicData}
+        defaultValue={defaultValue}
+        onChange={onEditorChange}
+      />
+    </div>
+
+  </FormItemWarpper>
 })
 
 

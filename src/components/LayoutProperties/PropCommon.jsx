@@ -90,7 +90,7 @@ export const FormPropertiesWrapper = forwardRef((props, ref) => {
 
 export const ActionProperties = (props) => {
     const { wrapRef, selectItem, attrs = ['hidden', 'disabled', 'clearable'] } = props
-    const { hidden, disabled, clearable, multiple, drag, range, showTime, allowHalf, showInput, showSearch, treeCheckable } = selectItem.options || {}
+    const { hidden, disabled, clearable, multiple, drag, range, showTime, allowHalf, showInput, showSearch, treeCheckable, showLabel, chinesization } = selectItem.options || {}
 
     const showItem = (d) => attrs.find(key => key === d)
 
@@ -116,6 +116,10 @@ export const ActionProperties = (props) => {
         {showItem('drag') ? <Checkbox checked={drag} onChange={(ev) => wrapRef.current.triggerFieldChange('options.drag', ev.target.checked)}>拖拽上传</Checkbox> : null}
 
         {showItem('treeCheckable') ? <Checkbox checked={treeCheckable} onChange={(ev) => wrapRef.current.triggerFieldChange('options.treeCheckable', ev.target.checked)}>可勾选</Checkbox> : null}
+        
+        {showItem('showLabel') ? <Checkbox checked={showLabel} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showLabel', ev.target.checked)}>显示Label</Checkbox> : null}
+
+        {showItem('chinesization') ? <Checkbox checked={chinesization} onChange={(ev) => wrapRef.current.triggerFieldChange('options.chinesization', ev.target.checked)}>汉化</Checkbox> : null}
     </Form.Item>
 }
 

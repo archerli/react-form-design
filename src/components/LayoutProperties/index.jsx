@@ -12,6 +12,7 @@ import RateProperties from './PropRate'
 import SliderProperties from './PropSlider'
 import UploadFileProperties from './PropUploadFile'
 import UploadImageProperties from './PropUploadImage'
+import EditorProperties from './PropEditor'
 
 import DividerProperties from './PropDivider'
 import GridProperties from './PropGrid'
@@ -33,6 +34,7 @@ export {
     SliderProperties,
     UploadFileProperties,
     UploadImageProperties,
+    EditorProperties,
     
     DividerProperties,
     GridProperties,

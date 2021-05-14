@@ -15,7 +15,8 @@ import {
     SliderProperties,
     UploadFileProperties,
     UploadImageProperties,
-
+    EditorProperties,
+    
     DividerProperties,
     GridProperties,
     CardProperties,
@@ -41,6 +42,7 @@ function ItemProperties(props) {
         'slider': SliderProperties,
         'uploadFile': UploadFileProperties,
         'uploadImg': UploadImageProperties,
+        'editor': EditorProperties,
 
         'grid': GridProperties,
         'card': CardProperties,
