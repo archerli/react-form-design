@@ -5,9 +5,9 @@ import {
 } from '@ant-design/icons';
 
 export const ActionGroup = (props) => {
-    const { onDelete, active } = props
+    const { onDelete, onCopy, active } = props
     return <>
-        <div className={`copy ${active ? 'active' : 'unactivated'}`}>
+        <div className={`copy ${active ? 'active' : 'unactivated'}`} onClick={onCopy}>
             <CopyOutlined />
         </div>
         <div className={`delete ${active ? 'active' : 'unactivated'}`} onClick={onDelete}>
@@ -17,7 +17,7 @@ export const ActionGroup = (props) => {
 }
 
 function FormItemDragWrap(props) {
-    const { hideModel, onSelect, onDelete, active, isEdit = true, data = {} } = props
+    const { hideModel, onSelect, onDelete, onCopy, active, isEdit = true, data = {} } = props
     // 预览 
     if (!isEdit) return props.children
     
@@ -28,7 +28,7 @@ function FormItemDragWrap(props) {
         >
             <div className="form-item-box">{props.children}</div>
             {hideModel || data.hideModel ? null : <div className="show-key-box"> {data.model}</div>}
-            <ActionGroup active={active} onDelete={onDelete} />
+            <ActionGroup active={active} onDelete={onDelete} onCopy={onCopy} />
         </div>
     );
 }

@@ -16,6 +16,8 @@ import EditorProperties from './PropEditor'
 import ButtonProperties from './PropButton'
 import SwitchProperties from './PropSwitch'
 import AlertProperties from './PropAlert'
+import TextProperties from './PropText'
+import HTMLProperties from './PropHtml'
 
 import DividerProperties from './PropDivider'
 import GridProperties from './PropGrid'
@@ -41,6 +43,8 @@ export {
     ButtonProperties,
     SwitchProperties,
     AlertProperties,
+    TextProperties,
+    HTMLProperties,
     
     DividerProperties,
     GridProperties,

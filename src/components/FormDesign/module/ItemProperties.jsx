@@ -19,6 +19,8 @@ import {
     ButtonProperties,
     SwitchProperties,
     AlertProperties,
+    TextProperties,
+    HTMLProperties,
 
     DividerProperties,
     GridProperties,
@@ -49,6 +51,8 @@ function ItemProperties(props) {
         'button': ButtonProperties,
         'switch': SwitchProperties,
         'alert': AlertProperties,
+        'text': TextProperties,
+        'html': HTMLProperties,
 
         'grid': GridProperties,
         'card': CardProperties,

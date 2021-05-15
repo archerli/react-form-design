@@ -31,7 +31,7 @@ const FormItemWarpper = (props) => {
   }, [data.options.minRows])
 
   useEffect(() => {
-    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$|^rate$|^slider$|^select$|^switch$/g.test(data.type)) {
+    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$|^rate$|^slider$|^select$|^switch$|^html$/g.test(data.type)) {
       form.setFieldsValue({ [data.model]: data.options.defaultValue })
     }
   }, [data.options.defaultValue])
@@ -387,9 +387,15 @@ export const AlertItem = memo((props) => {
 /* 文字 */
 export const TextItem = memo((props) => {
   const { data } = props
-  return <FormItemDragWrap {...props}>
-    <label>{data.label}</label>
-  </FormItemDragWrap>
+  const { textAlign, showRequiredMark } = data.options
+
+  return <FormItemWarpper {...props} showLabel={false} formProps={{ labelCol: {}, wrapperCol: {} }}>
+    <div style={{ textAlign }}>
+      <label
+        // className={showRequiredMark ? 'ant-form-item-required' : ''}
+      >{data.label}</label>
+    </div>
+  </FormItemWarpper>
 })
 
 /* 按钮 */
@@ -428,9 +434,9 @@ export const SwitchItem = memo((props) => {
 /* HTML */
 export const HTMLItem = memo((props) => {
   const { data } = props
-  return <FormItemDragWrap {...props}>
+  return <FormItemWarpper {...props} showLabel={false} formProps={{ labelCol: {}, wrapperCol: {} }}>
     <div dangerouslySetInnerHTML={{ __html: data.options.defaultValue }}></div>
-  </FormItemDragWrap>
+  </FormItemWarpper>
 })
 
 /* 分割线 */
