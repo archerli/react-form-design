@@ -13,6 +13,9 @@ import SliderProperties from './PropSlider'
 import UploadFileProperties from './PropUploadFile'
 import UploadImageProperties from './PropUploadImage'
 import EditorProperties from './PropEditor'
+import ButtonProperties from './PropButton'
+import SwitchProperties from './PropSwitch'
+import AlertProperties from './PropAlert'
 
 import DividerProperties from './PropDivider'
 import GridProperties from './PropGrid'
@@ -35,6 +38,9 @@ export {
     UploadFileProperties,
     UploadImageProperties,
     EditorProperties,
+    ButtonProperties,
+    SwitchProperties,
+    AlertProperties,
     
     DividerProperties,
     GridProperties,

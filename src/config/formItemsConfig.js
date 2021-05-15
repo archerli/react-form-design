@@ -470,7 +470,9 @@ export const basicsList = [
     options: {
       defaultValue: false, // 默认值 Boolean 类型
       hidden: false, // 是否隐藏，false显示，true隐藏
-      disabled: false // 是否禁用
+      disabled: false, // 是否禁用
+      checkedChildren: '',
+      unCheckedChildren: '',
     },
     model: "",
     key: "",

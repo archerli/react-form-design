@@ -24,6 +24,8 @@ import {
     TreeSelectItem,
     CasaderItem,
     EditorItem,
+    DynamicTableItem,
+    AlertItem,
 } from '../../LayoutFormItem'
 
 function LayoutItem(props) {
@@ -46,6 +48,7 @@ function LayoutItem(props) {
         'cascader': CasaderItem,
         'editor': EditorItem,
         
+        'alert': AlertItem,
         'text': TextItem,
         'button': ButtonItem,
         'switch': SwitchItem,
@@ -55,6 +58,7 @@ function LayoutItem(props) {
         'card': CardItem,
         'tabs': TabsItem,
         'table': TableItem,
+        'batch': DynamicTableItem,
     }[data.type]
 
     const active = data.key && data.key === (selectItem && selectItem.key)

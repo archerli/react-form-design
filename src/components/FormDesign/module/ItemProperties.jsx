@@ -16,7 +16,10 @@ import {
     UploadFileProperties,
     UploadImageProperties,
     EditorProperties,
-    
+    ButtonProperties,
+    SwitchProperties,
+    AlertProperties,
+
     DividerProperties,
     GridProperties,
     CardProperties,
@@ -43,6 +46,9 @@ function ItemProperties(props) {
         'uploadFile': UploadFileProperties,
         'uploadImg': UploadImageProperties,
         'editor': EditorProperties,
+        'button': ButtonProperties,
+        'switch': SwitchProperties,
+        'alert': AlertProperties,
 
         'grid': GridProperties,
         'card': CardProperties,

@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
 import IconFont from '../Icon'
-import { Form, Button, Switch, Input, InputNumber, Divider, Select, Checkbox, Radio, DatePicker, TimePicker, Rate, Slider, Upload, TreeSelect, Cascader } from 'antd'
+import { Form, Button, Switch, Input, InputNumber, Divider, Select, Checkbox, Radio, DatePicker, TimePicker, Rate, Slider, Upload, TreeSelect, Cascader, Alert } from 'antd'
 import GridItem from './GridItem'
 import CardItem from './CardItem'
 import TabsItem from './TabsItem'
@@ -31,7 +31,7 @@ const FormItemWarpper = (props) => {
   }, [data.options.minRows])
 
   useEffect(() => {
-    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$|^rate$|^slider$|^select$/g.test(data.type)) {
+    if (/^input$|^textarea$|^number$|^checkbox$|^radio$|^date$|^rate$|^slider$|^select$|^switch$/g.test(data.type)) {
       form.setFieldsValue({ [data.model]: data.options.defaultValue })
     }
   }, [data.options.defaultValue])
@@ -328,6 +328,13 @@ export const CasaderItem = memo((props) => {
 })
 
 /* 动态表格 */
+export const DynamicTableItem = memo((props) => {
+  const { data, config, onChange, form, dynamicData = {} } = props
+  const { defaultValue, disabled, placeholder, showSearch, options, dynamic, dynamicKey, clearable, width } = data.options || {}
+  return <FormItemWarpper {...props} showLabel={false}>
+    <div>动态表格</div>
+  </FormItemWarpper>
+})
 
 
 /* 富文本 */
@@ -361,6 +368,21 @@ export const EditorItem = memo((props) => {
   </FormItemWarpper>
 })
 
+/* 警告提示 */
+export const AlertItem = memo((props) => {
+  const { data, config, onChange, form, dynamicData = {} } = props
+  const { description, type, showIcon, closable, banner } = data.options || {}
+  return <FormItemWarpper {...props} showLabel={false} formProps={{ labelCol: {}, wrapperCol: {} }}>
+    <Alert
+      message={data.label}
+      description={description}
+      type={type}
+      showIcon={showIcon}
+      closable={closable}
+      banner={banner}
+    />
+  </FormItemWarpper>
+})
 
 /* 文字 */
 export const TextItem = memo((props) => {
@@ -372,17 +394,34 @@ export const TextItem = memo((props) => {
 
 /* 按钮 */
 export const ButtonItem = memo((props) => {
-  const { data } = props
-  return <FormItemDragWrap {...props}>
-    <Button>{data.label}</Button>
-  </FormItemDragWrap>
+  const { data, dynamicData, handleReset } = props
+  const { disabled, dynamicFun, handle, type } = data.options || {}
+
+  const onClick = (ev) => {
+    if (handle === 'submit') return
+    if (handle === 'reset') return handleReset && handleReset(ev)
+    if (dynamicData && dynamicData['dynamicFun']) return dynamicData['dynamicFun'](ev)
+  }
+
+  return <FormItemWarpper {...props} showLabel={false}>
+    <Button
+      disabled={props.disabled || disabled}
+      onClick={onClick}
+      type={type}
+      htmlType={handle === 'submit' ? 'submit' : undefined}
+    >{data.label}</Button>
+  </FormItemWarpper>
 })
 
 /* 开关 */
 export const SwitchItem = memo((props) => {
   const { data } = props
+  const { checkedChildren, unCheckedChildren } = data.options
   return <FormItemWarpper {...props} formProps={{ valuePropName: 'checked' }}>
-    <Switch>{data.label}</Switch>
+    <Switch
+      checkedChildren={checkedChildren}
+      unCheckedChildren={unCheckedChildren}
+    >{data.label}</Switch>
   </FormItemWarpper>
 })
 
