@@ -6,7 +6,7 @@ import { findValidItem } from '../../../utils'
 
 
 function FormComponentPanel(props) {
-    const { data, setList, selectItem, hideModel, handleSetSelectItem, setListOfIndex, onAdd, onColAdd } = props
+    const { data, setList, selectItem, hideModel, handleSetSelectItem, setListOfIndex, onAdd, onColAdd, onCopy, } = props
     const [form] = Form.useForm()
 
     useEffect(() => {
@@ -67,6 +67,7 @@ function FormComponentPanel(props) {
                                 setListOfIndex={setListOfIndex}
                                 onDelete={onDelete}
                                 onColAdd={onColAdd}
+                                onCopy={onCopy}
                             />
                         })}
                     </ReactSortable>

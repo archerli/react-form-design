@@ -3,7 +3,7 @@ import IconFont from '../../Icon'
 import { ReactSortable } from "react-sortablejs";
 
 function CollapseItem(props) {
-    const { list, onChoose, onEnd } = props
+    const { list, onChoose, onEnd, onListPush } = props
 
     const setData = (dataTransfer, dragEl) => {
         // console.log(dataTransfer, dragEl)
@@ -23,21 +23,21 @@ function CollapseItem(props) {
             setData={setData}
         >
             {
-                list.map((d, i) => <Item key={i} data={d} index={i} />)
+                list.map((d, i) => <Item key={i} data={d} index={i} onListPush={onListPush} />)
             }
         </ReactSortable>
     );
 }
 
 const Item = (props) => {
-    const { data, index } = props
+    const { data, index, onListPush } = props
 
     return (
         <li
             role="Box"
             data-testid={`box-${index}`}
             // dragstart="$emit('generateKey', list, index)"
-            // click="$emit('handleListPush', val)"
+            onClick={() => onListPush && onListPush(data)}
         >
             {!data.icon ? null : <IconFont type={data.icon} className="icon" />}
             {data.label}

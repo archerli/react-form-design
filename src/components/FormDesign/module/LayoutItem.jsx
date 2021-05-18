@@ -26,11 +26,11 @@ import {
     EditorItem,
     DynamicTableItem,
     AlertItem,
-    
+
 } from '../../LayoutFormItem'
 
 function LayoutItem(props) {
-    const { index, selectItem, handleSetSelectItem, onDelete, hideModel, data = {} } = props
+    const { index, selectItem, handleSetSelectItem, onDelete, onCopy, hideModel, data = {} } = props
 
     const Component = {
         'input': InputItem,
@@ -48,7 +48,7 @@ function LayoutItem(props) {
         'treeSelect': TreeSelectItem,
         'cascader': CasaderItem,
         'editor': EditorItem,
-        
+
         'alert': AlertItem,
         'text': TextItem,
         'button': ButtonItem,
@@ -74,9 +74,14 @@ function LayoutItem(props) {
         onDelete && onDelete(index, data)
     }
 
+    const onItemCopy = (e) => {
+        e.stopPropagation()
+        onCopy && onCopy(index, data)
+    }
+
     return (
         <div className="drag-move" >
-            {Component ? <Component {...props} active={active} onSelect={onSelect} onDelete={onItemDelte} /> : null}
+            {Component ? <Component {...props} active={active} onSelect={onSelect} onDelete={onItemDelte} onCopy={onItemCopy} /> : null}
         </div>
     );
 }

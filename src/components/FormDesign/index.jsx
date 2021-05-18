@@ -105,16 +105,34 @@ const FormDesign = forwardRef((props, ref) => {
     setLayout(layout)
   }
 
+  const onListPush = (data) => {
+    let record = cloneDeep(data)
+    record.key = record.model = record.type + '_' + instance()
+    delete record.icon
+    delete record.component
+    formConfig.list.push(record)
+    setFormConfig({ ...formConfig })
+    handleSetSelectItem(record)
+  }
+
   const onAdd = (evt) => {
     setTimeout(() => {
       let record = cloneDeep(formConfig.list[evt.newIndex])
       if (record) {
-        delete record.icon;
-        delete record.component;
+        delete record.icon
+        delete record.component
         set(formConfig, `list[${evt.newIndex}]`, record)
         handleSetSelectItem(record)
       }
     }, 0)
+  }
+
+  const onCopy = (index, data) => {
+    let record = cloneDeep(data)
+    record.key = record.model = record.type + '_' + instance()
+    formConfig.list.splice(index + 1, 0, record)
+    setFormConfig({ ...formConfig })
+    handleSetSelectItem(record)
   }
 
   // 顶部操作栏
@@ -139,6 +157,7 @@ const FormDesign = forwardRef((props, ref) => {
               <CollapseItem
                 list={basics}
                 onChoose={onChooseBasics}
+                onListPush={onListPush}
               // onEnd={onModelItemDragEnd}
               />
             </Panel>}
@@ -147,6 +166,7 @@ const FormDesign = forwardRef((props, ref) => {
               <CollapseItem
                 list={layout}
                 onChoose={onChooseLayout}
+                onListPush={onListPush}
               // onEnd={onModelItemDragEnd}
               />
             </Panel>}
@@ -165,6 +185,7 @@ const FormDesign = forwardRef((props, ref) => {
             hideModel={hideModel}
             handleSetSelectItem={handleSetSelectItem}
             onAdd={onAdd}
+            onCopy={onCopy}
             setListOfIndex={setListOfIndex}
           />
           <PrevieFormModal ref={previewFormRef} />

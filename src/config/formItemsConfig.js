@@ -423,22 +423,22 @@ export const basicsList = [
       }
     ]
   },
-  {
-    type: "batch",
-    label: "动态表格",
-    icon: "icon-biaoge",
-    list: [],
-    options: {
-      scrollY: 0,
-      disabled: false,
-      hidden: false, // 是否隐藏，false显示，true隐藏
-      showLabel: false,
-      hideSequence: false,
-      width: "100%"
-    },
-    model: "",
-    key: ""
-  },
+  // {
+  //   type: "batch",
+  //   label: "动态表格",
+  //   icon: "icon-biaoge",
+  //   list: [],
+  //   options: {
+  //     scrollY: 0,
+  //     disabled: false,
+  //     hidden: false, // 是否隐藏，false显示，true隐藏
+  //     showLabel: false,
+  //     hideSequence: false,
+  //     width: "100%"
+  //   },
+  //   model: "",
+  //   key: ""
+  // },
   {
     type: "editor",
     label: "富文本",
