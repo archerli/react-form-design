@@ -1,6 +1,7 @@
 import React from 'react';
 import IconFont from '../../Icon'
 import { ReactSortable } from "react-sortablejs";
+import { get } from 'lodash-es';
 
 function CollapseItem(props) {
     const { list, onChoose, onEnd, onListPush } = props
@@ -40,7 +41,7 @@ const Item = (props) => {
             onClick={() => onListPush && onListPush(data)}
         >
             {!data.icon ? null : <IconFont type={data.icon} className="icon" />}
-            {data.label}
+            {get(data, 'formOptions.label') || get(data, 'label')}
         </li>
 
     );

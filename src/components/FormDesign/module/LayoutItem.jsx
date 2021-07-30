@@ -55,7 +55,7 @@ function LayoutItem(props) {
         'switch': SwitchItem,
         'html': HTMLItem,
         'divider': DividerItem,
-        'grid': GridItem,
+        'row': GridItem,
         'card': CardItem,
         'tabs': TabsItem,
         'table': TableItem,

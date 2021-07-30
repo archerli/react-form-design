@@ -8,7 +8,7 @@ function PreviewForm(props) {
     );
 }
 
-export const PrevieFormModal = forwardRef((props, ref) => {
+export const PreviewFormModal = forwardRef((props, ref) => {
     const [data, setData] = useState('')
     const [visible, setVisible] = useState(false)
 

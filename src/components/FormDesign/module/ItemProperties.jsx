@@ -54,13 +54,13 @@ function ItemProperties(props) {
         'text': TextProperties,
         'html': HTMLProperties,
 
-        'grid': GridProperties,
+        'row': GridProperties,
         'card': CardProperties,
         'tabs': TabsProperties,
     }[selectItem.type]
 
     return (
-        <div className={`properties-centent kk-checkbox ${cls}`}>
+        <div className={`properties-content kk-checkbox ${cls}`}>
             <div className="head-title">控件属性设置</div>
             <div className="properties-body">
                 {Component ? <Component

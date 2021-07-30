@@ -17,6 +17,7 @@ const TabsProperties = (props) => {
     const onAddCol = () => {
         let columns = [...selectItem.columns]
         let column = cloneDeep(columns.slice(-1)[0] || {
+            type: 'col',
             span: 12
         })
         column.list = []

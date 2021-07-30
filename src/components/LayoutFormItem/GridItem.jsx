@@ -1,4 +1,4 @@
-import React, { memo, useState, useRef } from 'react';
+import React, { memo, useState, useRef, forwardRef } from 'react';
 import { Row, Col } from 'antd'
 import { ReactSortable } from "react-sortablejs";
 import LayoutItem from '../FormDesign/module/LayoutItem'
@@ -9,9 +9,13 @@ import { findValidItem } from '../../utils'
 const GridItem = memo((props) => {
     const { data, config, form, index, selectItem, onSelect, hideModel, onDelete, handleSetSelectItem, setListOfIndex, isEdit = true } = props
     const active = data.key && data.key === (selectItem && selectItem.key)
+    const setColumnsList = (d, list) => {
+        console.log(list)
+    }
 
     const setNestedList = (d, i, list) => {
-        data.columns[i].list = list
+        // console.log(list)
+        data.columns[i].list = cloneDeep(list)
         setListOfIndex(index, data)
     }
 
@@ -30,7 +34,7 @@ const GridItem = memo((props) => {
     const onAdd = (i, evt) => {
         setTimeout(() => {
             let record = data.columns[i].list[evt.newIndex]
-            // 从容器中移出元素时，也会执行，此时 item 值为 undfined
+            // 从容器中移出元素时，也会执行，此时 item 值为 undefined
             if (record) {
                 delete record.icon;
                 delete record.component;
@@ -64,6 +68,18 @@ const GridItem = memo((props) => {
     }
 
     return <div className={`grid-box ${active ? 'active' : ''}`} onClick={onSelect}>
+        {/* <ReactSortable
+            tag={'div'}
+            className="list-main"
+            list={data.columns}
+            setList={(list) => setColumnsList(data, list)}
+            group={{ name: 'form-draggable' }}
+            animation={180}
+            ghostClass={'moving'}
+            handle={'.drag-move'}
+            onStart={(evt) => onDragStart(evt)}
+            onAdd={(evt) => onAdd(evt)}
+        > */}
         <Row className="grid-row" gutter={data.options.gutter} >
             {data.columns.map((d, i) => {
                 return <Col className="grid-col" key={`grid_col_${i}`} span={d.span || 0}>
@@ -97,7 +113,10 @@ const GridItem = memo((props) => {
             })}
         </Row>
 
+        {/* </ReactSortable> */}
+
         {!isEdit ? null : <ActionGroup active={active} {...props} />}
+
     </div>
 })
 

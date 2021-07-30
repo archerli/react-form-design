@@ -15,11 +15,11 @@ import hyperid from 'hyperid'
 import ItemProperties from './module/ItemProperties';
 import { cloneDeep, isNil, set } from 'lodash';
 import { PreviewJsonModal } from '../Actions/PreviewJson'
-import { PrevieFormModal } from '../Actions/PreviewForm'
+import { PreviewFormModal } from '../Actions/PreviewForm'
 
 const { Panel } = Collapse;
 
-const instance = hyperid(true)
+const instance = hyperid()
 
 const FormDesign = forwardRef((props, ref) => {
   const { fields, toolbars } = props
@@ -188,7 +188,7 @@ const FormDesign = forwardRef((props, ref) => {
             onCopy={onCopy}
             setListOfIndex={setListOfIndex}
           />
-          <PrevieFormModal ref={previewFormRef} />
+          <PreviewFormModal ref={previewFormRef} />
           <PreviewJsonModal ref={previewJsonRef} />
         </section>
 
@@ -240,7 +240,7 @@ FormDesign.defaultProps = {
     'divider',
     'card',
     'tabs',
-    'grid',
+    'row',
     'table'
   ],
   toolbars: [

@@ -3,11 +3,57 @@
  * date 2019-11-20
  * description 表单控件项
  */
+// TODO 数组合并
+const mergeItem = (target, props) => {
+  for (let key in props) {
+    let targetType = Object.prototype.toString.call(target[key])
+    let propsType = Object.prototype.toString.call(props[key])
+    if (targetType === propsType) {
+      switch (targetType) {
+        case '[object Array]':
+          for (let i = 0; i < target[key].length; i++) {
+            mergeItem(target[key][i], props[key][i])
+          }
+          break;
+        case '[object Object]':
+          mergeItem(target[key], props[key])
+          target[key] = Object.assign({}, props[key], target[key])
+          break;
+        default:
+          target[key] = props[key]
+      }
+    }
+  }
+}
+
+const mergeList = (list, props) => {
+  for (let item of list) {
+    mergeItem(item, props)
+  }
+  // console.log(list)
+  return list
+}
+
+const commonProps = {
+  formOptions: {
+    // labelCol: { span: 4 },
+    // wrapperCol: { span: 18 },
+    rules: [
+      //验证规则
+      {
+        required: false, // 必须填写
+        message: "必填项"
+      }
+    ]
+  },
+}
 // 基础控件
-export const basicsList = [
+export const basicsList = mergeList([
   {
+    formOptions: {
+      label: "输入框", // 标题文字
+    },
     type: "input", // 表单类型
-    label: "输入框", // 标题文字
     icon: "icon-write",
     options: {
       type: "text",
@@ -21,17 +67,13 @@ export const basicsList = [
     },
     model: "", // 数据字段
     key: "",
-    rules: [
-      //验证规则
-      {
-        required: false, // 必须填写
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "文本框", // 标题文字
+    },
     type: "textarea", // 表单类型
-    label: "文本框", // 标题文字
+
     icon: "icon-edit",
     options: {
       width: "100", // 宽度
@@ -46,16 +88,12 @@ export const basicsList = [
     },
     model: "", // 数据字段
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "数字输入框", // 标题文字
+    },
     type: "number", // 表单类型
-    label: "数字输入框", // 标题文字
     icon: "icon-number",
     options: {
       width: 100, // 宽度
@@ -78,8 +116,10 @@ export const basicsList = [
     ]
   },
   {
+    formOptions: {
+      label: "下拉选择器", // 标题文字
+    },
     type: "select", // 表单类型
-    label: "下拉选择器", // 标题文字
     icon: "icon-xiala",
     options: {
       width: 100, // 宽度
@@ -104,18 +144,15 @@ export const basicsList = [
       ],
       showSearch: false // 是否显示搜索框，搜索选择的项的值，而不是文字
     },
+
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "多选框", // 标题文字
+    },
     type: "checkbox",
-    label: "多选框",
     icon: "icon-duoxuan1",
     options: {
       disabled: false, //是否禁用
@@ -140,16 +177,12 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "单选框", // 标题文字
+    },
     type: "radio", // 表单类型
-    label: "单选框", // 标题文字
     icon: "icon-danxuan-cuxiantiao",
     options: {
       disabled: false, //是否禁用
@@ -174,16 +207,12 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "日期选择框", // 标题文字
+    },
     type: "date", // 表单类型
-    label: "日期选择框", // 标题文字
     icon: "icon-calendar",
     options: {
       width: 100, // 宽度
@@ -200,16 +229,12 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "时间选择框", // 标题文字
+    },
     type: "time", // 表单类型
-    label: "时间选择框", // 标题文字
     icon: "icon-time",
     options: {
       width: 100, // 宽度
@@ -222,16 +247,12 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "评分", // 标题文字
+    },
     type: "rate", // 表单类型
-    label: "评分", // 标题文字
     icon: "icon-pingfen_moren",
     options: {
       defaultValue: 0,
@@ -242,16 +263,12 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "滑动输入条", // 标题文字
+    },
     type: "slider", // 表单类型
-    label: "滑动输入条", // 标题文字
     icon: "icon-menu",
     options: {
       width: 100, // 宽度
@@ -266,16 +283,12 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "上传文件", // 标题文字
+    },
     type: "uploadFile", // 表单类型
-    label: "上传文件", // 标题文字
     icon: "icon-upload",
     options: {
       defaultValue: "[]",
@@ -295,16 +308,12 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "上传图片", // 标题文字
+    },
     type: "uploadImg",
-    label: "上传图片",
     icon: "icon-image",
     options: {
       defaultValue: "[]",
@@ -322,16 +331,12 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "树选择器", // 标题文字
+    },
     type: "treeSelect", // 表单类型
-    label: "树选择器", // 标题文字
     icon: "icon-tree",
     options: {
       width: 100,
@@ -370,16 +375,12 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "级联选择器", // 标题文字
+    },
     type: "cascader", // 表单类型
-    label: "级联选择器", // 标题文字
     icon: "icon-guanlian",
     options: {
       width: 100,
@@ -416,12 +417,6 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   // {
   //   type: "batch",
@@ -440,8 +435,10 @@ export const basicsList = [
   //   key: ""
   // },
   {
+    formOptions: {
+      label: "富文本", // 标题文字
+    },
     type: "editor",
-    label: "富文本",
     icon: "icon-LC_icon_edit_line_1",
     list: [],
     options: {
@@ -456,16 +453,12 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
+    formOptions: {
+      label: "开关", // 标题文字
+    },
     type: "switch", // 表单类型
-    label: "开关", // 标题文字
     icon: "icon-kaiguan3",
     options: {
       defaultValue: false, // 默认值 Boolean 类型
@@ -476,12 +469,6 @@ export const basicsList = [
     },
     model: "",
     key: "",
-    rules: [
-      {
-        required: false,
-        message: "必填项"
-      }
-    ]
   },
   {
     type: "button", // 表单类型
@@ -535,7 +522,7 @@ export const basicsList = [
     },
     key: ""
   }
-];
+], commonProps)
 
 // 高级控件
 // export const highList = [];
@@ -620,15 +607,17 @@ export const layoutList = [
     model: ""
   },
   {
-    type: "grid",
+    type: "row",
     label: "栅格布局",
     icon: "icon-zhage",
     columns: [
       {
+        type: 'col',
         span: 12,
         list: []
       },
       {
+        type: 'col',
         span: 12,
         list: []
       }

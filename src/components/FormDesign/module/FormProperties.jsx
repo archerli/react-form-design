@@ -10,7 +10,7 @@ function FormProperties(props) {
     }
 
     return (
-        <div className="properties-centent">
+        <div className="properties-content">
             <div className="head-title">
                 表单属性设置
             </div>

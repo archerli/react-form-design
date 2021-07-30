@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useEffect } from 'react';
-import { Form, Input, Row, Col, Button, Space, Checkbox } from 'antd'
-import { isNil, set } from 'lodash-es'
+import { Form, Input, Row, Col, Button, Space, Checkbox, Slider } from 'antd'
+import { isNil, set, get } from 'lodash-es'
 import {
     DeleteOutlined
 } from '@ant-design/icons';
@@ -23,14 +23,15 @@ export const NormalPropertiesWrapper = forwardRef((props, ref) => {
         updateRules: updateRules
     }))
 
-
     useEffect(() => {
         form.resetFields()
     }, [selectItem])
 
-
     const onValuesChange = (changedValues, allValues) => {
         for (let key in changedValues) {
+            if (Object.prototype.toString.call(changedValues[key]) === '[object Object]') {
+                changedValues[key] = Object.assign({}, allValues[key], changedValues[key])
+            }
             set(selectItem, key, changedValues[key])
         }
         let nextList = dfsUpdateList(list, selectItem)
@@ -56,22 +57,27 @@ export const NormalPropertiesWrapper = forwardRef((props, ref) => {
     }
 
     const updateRules = (nextRules) => {
-        selectItem.rules = nextRules
+        // selectItem.rules = nextRules
+        set(selectItem, 'formOptions.rules', nextRules)
         handleSetSelectItem(selectItem)
         setList(list.map(d => {
             if (d.key === selectItem.key) return { ...selectItem }
             return d
         }))
     }
-
+    // console.log(selectItem)
     return <Form
         form={form}
         layout={'vertical'}
         initialValues={selectItem}
         onValuesChange={onValuesChange}
     >
-        {isNil(selectItem.label) ? null : <Form.Item label={'标签'} name="label">
-            <Input placeholder="请输入标签" />
+        {isNil(get(selectItem, 'formOptions.label')) ? null : <Form.Item label={'标签'} >
+            <Input
+                value={get(selectItem, 'formOptions.label')}
+                onChange={(e) => ref.current.triggerFieldChange('formOptions.label', e.target.value)}
+                placeholder="请输入标签"
+            />
         </Form.Item>}
         {children}
     </Form>
@@ -80,9 +86,29 @@ export const NormalPropertiesWrapper = forwardRef((props, ref) => {
 export const FormPropertiesWrapper = forwardRef((props, ref) => {
     const { children, ...rest } = props
 
+    const maxSpan = 24
+
+    const onLabelColChange = (value) => {
+        // ref.current.triggerFieldChange('formOptions.wrapperCol', { span: maxSpan - value })
+        ref.current.triggerFieldChange('formOptions.labelCol', { span: value })
+    }
+
+    const onWrapperColChange = (value) => {
+        // ref.current.triggerFieldChange('formOptions.labelCol', { span: maxSpan - value })
+        ref.current.triggerFieldChange('formOptions.wrapperCol', { span: value })
+    }
+
     return <NormalPropertiesWrapper {...rest} ref={ref}>
         {isNil(props.selectItem.model) ? null : <Form.Item label={'数据字段'} name="model">
             <Input placeholder="请输入数据字段" />
+        </Form.Item>}
+
+        {isNil(props.selectItem.labelCol) ? null : <Form.Item label={'labelCol（水平布局生效）'} >
+            <Slider onChange={onLabelColChange} value={get(props, 'selectItem.formOptions.labelCol.span')} tipFormatter={(value) => `${value} Span`} max={maxSpan} />
+        </Form.Item>}
+
+        {isNil(props.selectItem.wrapperCol) ? null : <Form.Item label={'wrapperCol（水平布局生效）'} >
+            <Slider onChange={onWrapperColChange} value={get(props, 'selectItem.formOptions.wrapperCol.span')} tipFormatter={(value) => `${value} Span`} max={maxSpan} reverse />
         </Form.Item>}
         {children}
     </NormalPropertiesWrapper>
@@ -116,7 +142,7 @@ export const ActionProperties = (props) => {
         {showItem('drag') ? <Checkbox checked={drag} onChange={(ev) => wrapRef.current.triggerFieldChange('options.drag', ev.target.checked)}>拖拽上传</Checkbox> : null}
 
         {showItem('treeCheckable') ? <Checkbox checked={treeCheckable} onChange={(ev) => wrapRef.current.triggerFieldChange('options.treeCheckable', ev.target.checked)}>可勾选</Checkbox> : null}
-        
+
         {showItem('showLabel') ? <Checkbox checked={showLabel} onChange={(ev) => wrapRef.current.triggerFieldChange('options.showLabel', ev.target.checked)}>显示Label</Checkbox> : null}
 
         {showItem('chinesization') ? <Checkbox checked={chinesization} onChange={(ev) => wrapRef.current.triggerFieldChange('options.chinesization', ev.target.checked)}>汉化</Checkbox> : null}
@@ -125,17 +151,18 @@ export const ActionProperties = (props) => {
 
 export const ValidateProperties = (props) => {
     const { wrapRef, selectItem } = props
+    const rule = get(selectItem, 'formOptions.rules[0]', {})
     return <Form.Item label="校验">
         <Checkbox
-            checked={selectItem.rules[0].required}
-            onChange={(ev) => wrapRef.current.triggerFieldChange('rules[0].required', ev.target.checked)}>必填</Checkbox>
+            checked={rule.required}
+            onChange={(ev) => wrapRef.current.triggerFieldChange('formOptions.rules[0].required', ev.target.checked)}>必填</Checkbox>
         <Input
-            value={selectItem.rules[0].message}
-            onChange={(ev) => wrapRef.current.triggerFieldChange('rules[0].message', ev.target.value)}
+            value={rule.message}
+            onChange={(ev) => wrapRef.current.triggerFieldChange('formOptions.rules[0].message', ev.target.value)}
             placeholder="必填校验提示信息"
         />
         <CustomRules
-            data={selectItem.rules}
+            data={get(selectItem, 'formOptions.rules', [])}
             updateRules={wrapRef.current && wrapRef.current.updateRules}
         />
     </Form.Item>
